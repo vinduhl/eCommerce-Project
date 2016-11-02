@@ -13,6 +13,7 @@ mongoose.connection.once("open", function() {
   console.log("Mongoose connected");
 })
 
+// Set up routes
 routes(app);
 
 
