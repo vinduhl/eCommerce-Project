@@ -22,7 +22,7 @@ module.exports = {
         return res.status(200).json(product);
       });
     } else {
-      Product.find({}, (err, products) => {
+      Product.find(req.query, (err, products) => {
         if(err) {
           return res.status(500).json({ message: err });
         }
