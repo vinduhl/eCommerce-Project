@@ -1,36 +1,58 @@
+const Product = require("./Product");
 
 module.exports = {
 
   addProduct(req, res) {
-    console.log("addProduct()");
-    return res.status(200).json({ message: "addProduct()" });
+    new Product(req.body).save((err, product) => {
+      if(err) {
+        return res.status(500).json({ message: err });
+      }
+      return res.status(201).json(product);
+    });
+
   },
 
   getProduct(req, res) {
-    console.log("getProduct()");
     const productId = req.params.id;
     if(productId) {
-      console.log(`productId: ${productId}`);
+      Product.findById(productId, (err, product) => {
+        if(err) {
+          return res.status(500).json({ message: err });
+        }
+        return res.status(200).json(product);
+      });
+    } else {
+      Product.find({}, (err, products) => {
+        if(err) {
+          return res.status(500).json({ message: err });
+        }
+        return res.status(200).json(products);
+      })
     }
-    return res.status(200).json({ message: "getProduct()" });
   },
 
   updateProduct(req, res) {
-    console.log("updateProduct()");
     const productId = req.params.id;
     if(productId) {
-      console.log(`productId: ${productId}`);
+      Product.findByIdAndUpdate(productId, req.body, (err, product) => {
+        if(err) {
+          return es.status(500).json({ message: err });
+        }
+        return res.status(200).json(product);
+      })
     }
-    return res.status(200).json({ message: "updateProduct()" });
   },
 
   deleteProduct(req, res) {
-    console.log("deleteProduct()");
     const productId = req.params.id;
     if(productId) {
-      console.log(`productId: ${productId}`);
+      Product.findByIdAndRemove(productId, (err, deletedProduct) => {
+        if(err) {
+          return res.status(401).json({ message: err });
+        }
+        return res.status(200).json(deletedProduct);
+      })
     }
-    return res.status(200).json({ message: "deleteProduct()" });
   }
 
 }
