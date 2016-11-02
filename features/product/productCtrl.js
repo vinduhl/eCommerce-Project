@@ -36,9 +36,14 @@ module.exports = {
     if(productId) {
       Product.findByIdAndUpdate(productId, req.body, (err, product) => {
         if(err) {
-          return es.status(500).json({ message: err });
+          return res.status(500).json({ message: err });
         }
-        return res.status(200).json(product);
+        Product.findById(productId, (err, product) => {
+          if(err) {
+            return res.status(500).json({ message: err });
+          }
+          return res.status(200).json(product);
+        })
       })
     }
   },
