@@ -1,4 +1,4 @@
-const controller = require("./controller");
+const controller = require("./productCtrl");
 
 module.exports = app => {
 

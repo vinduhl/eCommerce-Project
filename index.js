@@ -2,7 +2,7 @@ const express = require("express");
 const { json } = require("body-parser");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const routes = require("./features/routes");
+const routes = require("./features/product/productRoutes");
 
 const app = express();
 app.use(json());
