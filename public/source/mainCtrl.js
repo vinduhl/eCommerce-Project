@@ -15,6 +15,6 @@ app.controller("MainCtrl", function($scope, productService) {
           $scope.products = result.data;
         }
       });
-  }
+  };
 
-})
+});

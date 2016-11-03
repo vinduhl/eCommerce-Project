@@ -27,7 +27,7 @@ module.exports = {
           return res.status(500).json(err);
         }
         return res.status(200).json(products);
-      })
+      });
     }
   },
 
@@ -43,8 +43,8 @@ module.exports = {
             return res.status(500).json(err);
           }
           return res.status(200).json(product);
-        })
-      })
+        });
+      });
     }
   },
 
@@ -56,8 +56,8 @@ module.exports = {
           return res.status(401).json(err);
         }
         return res.status(200).json(deletedProduct);
-      })
+      });
     }
   }
 
-}
+};

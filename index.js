@@ -13,7 +13,7 @@ app.use(express.static("./public"));
 mongoose.connect("mongodb://localhost:27017/ecommerce-project");
 mongoose.connection.once("open", function() {
   console.log("Mongoose connected");
-})
+});
 
 // Set up routes
 routes(app);

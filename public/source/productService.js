@@ -5,7 +5,7 @@ app.service("productService", function($http, $q) {
   ProductResponse = function(err = null, data = null) {
     this.error = err;
     this.data = data;
-  }
+  };
 
   this.getProducts = function() {
     return $http
@@ -17,6 +17,6 @@ app.service("productService", function($http, $q) {
         return new ProductResponse(errorResponse.data);
       }
     );
-  }
+  };
 
-})
+});
