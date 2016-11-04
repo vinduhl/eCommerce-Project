@@ -1,6 +1,6 @@
 const app = angular.module("eCommerceApp", ['ui.router']);
 
-app.config(function($stateProvider, $urlRouterProvider) {
+app.config( ($stateProvider, $urlRouterProvider) => {
   $stateProvider
   .state("home", {
     url: "/",

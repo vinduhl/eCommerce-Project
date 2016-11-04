@@ -1,1 +1,25 @@
-Admin View - Under Construction
+<div><strong>Admin View</strong></div>
+
+<form ng-submit="createProduct(newProduct)">
+  Name: <input type="text" ng-model="newProduct.name"><br/>
+  Description: <input type="text" ng-model="newProduct.description"><br/>
+  Type: <input type="text" ng-model="newProduct.type"><br/>
+  Onhand: <input type="text" ng-model="newProduct.onhand"><br/>
+  Price: <input type="text" ng-model="newProduct.price"><br/>
+  <input type="submit" id="submit" value="Add Product"/>
+</form>
+<div class="error-message">{{ errorMessage }}</div>
+
+<div id="newProductDisplay" ng-show="newProduct">
+  Successfully created {{ newProduct.name }}. <button ng-click="newProduct = null">Hide</button>
+</div>
+
+<div id="productList">
+  <ul>
+    <li ng-repeat="product in products">
+      {{ product.name }}
+      <button>Edit</button>
+      <button>Delete</button>
+    </li>
+  </ul>
+</div>

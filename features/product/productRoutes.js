@@ -1,6 +1,6 @@
 const controller = require("./productCtrl");
 
-module.exports = app => {
+module.exports = (app) => {
 
   app.post("/api/products", controller.addProduct);
 
