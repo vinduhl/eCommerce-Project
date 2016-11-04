@@ -10,14 +10,14 @@
 </head>
 <body ng-controller="MainCtrl">
 
-<button ng-click="getProducts()">Show All Products</button> <span class="error-message">{{ errorMessage }}</span>
+<div>
+  <a ui-sref="home">Customer</a> <a ui-sref="admin">Admin</a>
+</div>
 
-<ul>
-  <li ng-repeat="product in products">{{ product.name }}</li>
-</ul>
-
+<ui-view></ui-view>
 
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.js"></script>
 <script src="./source/app.js"></script>
 <script src="./source/mainCtrl.js"></script>
 <script src="./source/productService.js"></script>

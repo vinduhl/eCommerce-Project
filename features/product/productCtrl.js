@@ -19,7 +19,8 @@ module.exports = {
         if(err) {
           return res.status(500).json(err);
         }
-        return res.status(200).json(product);
+        // package product into array so client can expect an array regardless
+        return res.status(200).json([product]);
       });
     } else {
       Product.find(req.query, (err, products) => {
