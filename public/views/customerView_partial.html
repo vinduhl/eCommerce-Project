@@ -1,13 +1,52 @@
-<div><strong>Customer View</strong></div>
-
-<p>Search</p>
-Product Name: <input type="text" ng-model="prod.productName"/><br/>
-Product ID: <input type="text" ng-model="prod.productId"/><br/>
-Product Type: <input type="text" ng-model="prod.productType"/><br/>
-<button ng-click="getProducts(prod)">Get Product</button>
-<div class="error-message">{{ errorMessage }}</div>
-
-<p>Products</p>
-<ul>
-  <li ng-repeat="product in products">{{ product.name }}</li>
-</ul>
+<div class="container" ng-controller="MainCtrl">
+  <div class="row">
+    <div class="col-sm-4">
+      <h4>Customer View</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-4">
+      <p><strong>Search Products</strong></p>
+      <div class="table-responsive">
+        <table class="table">
+          <tr>
+            <td>Product Name:</td><td><input type="text" ng-model="prod.productName"/></td>
+          </tr>
+          <tr>
+            <td>Product ID:</td><td><input type="text" ng-model="prod.productId"/></td>
+          </tr>
+          <tr>
+            <td>Product Type:</td><td><input type="text" ng-model="prod.productType"/></td>
+          </tr>
+        </table>
+      </div>
+      <div>
+        <button ng-click="getProducts(prod)">Find Product</button>
+      </div>
+      <div class="error-message">{{ errorMessage }}</div>
+    </div>
+    <div class="col-sm-4">
+      <p><strong>Products</strong></p>
+      <div class="table-responsive">
+        <table class="table">
+          <tr>
+            <th>
+              Product Name
+            </th>
+            <th>
+              Description
+            </th>
+          </tr>
+          <tr ng-repeat="product in products">
+            <td>
+              {{ product.name }}
+            </td>
+            <td>
+              {{ product.description}}
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

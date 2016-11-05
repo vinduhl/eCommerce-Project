@@ -54,7 +54,7 @@ app.service("productService", function($http, $q) {
   this.updateProduct = (product) => {
     return $http
       .put(`${baseUrl}products/${product._id}`, product)
-      .then ( (response) => {
+      .then( (response) => {
         return new ProductResponse(null, response.data);
       },
       (errorResponse) => {
@@ -62,6 +62,16 @@ app.service("productService", function($http, $q) {
       });
   };
 
+  this.deleteProduct = (productId) => {
+    return $http
+      .delete(`${baseUrl}products/${productId}`)
+      .then( (response) => {
+        return new ProductResponse(null, response.data);
+      },
+      (errorResponse) => {
+        return new ProductResponse(errorResponse.data);
+      });
+  }
 
 
   function isPresent(field) {

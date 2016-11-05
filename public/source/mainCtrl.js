@@ -2,7 +2,6 @@ app.controller("MainCtrl", ($scope, productService) => {
 
   $scope.testing = "This is a test";
   $scope.products = [];
-  $scope.newProduct = {};
   $scope.editMode = false;
   $scope.newProductCreated = false;
 
@@ -16,8 +15,6 @@ app.controller("MainCtrl", ($scope, productService) => {
           $scope.errorMessage = result.error;
         } else {
           $scope.products = result.data;
-          console.log("result.data");
-          console.log(result.data);
         }
       });
   };
@@ -26,7 +23,7 @@ app.controller("MainCtrl", ($scope, productService) => {
 
   $scope.createProduct = (newProduct) => {
 
-    $scope.newProduct = null;
+    //$scope.newProduct = null;
     $scope.newProductCreated = false;
 
     productService.addProduct(newProduct)
@@ -34,22 +31,17 @@ app.controller("MainCtrl", ($scope, productService) => {
         if(result.error) {
           $scope.errorMessage = result.error;
         } else {
-          $scope.newProduct = result.data;
+          $scope.newProductName = result.data.name;
           $scope.newProductCreated = true;
         }
       });
   };
 
   $scope.createProductAndShowList = (newProduct) => {
-    $scope.createProduct(newProduct);
-    $scope.newProduct = {
-      name: "",
-      description: "",
-      type: "",
-      onhand: "",
-      price: ""
-    };
-    
+    const np = angular.copy(newProduct);
+    $scope.createProduct(np);
+    $scope.newProductForm.$setPristine();
+    $scope.newProduct = {};
     $scope.getProducts();
   };
 
@@ -62,6 +54,11 @@ app.controller("MainCtrl", ($scope, productService) => {
     productService.updateProduct(product);
     $scope.getProducts();
     $scope.editMode = false;
+  }
+
+  $scope.deleteProduct = (productId) => {
+    productService.deleteProduct(productId);
+    $scope.getProducts();
   }
 
   $scope.cancelEdit = () => {

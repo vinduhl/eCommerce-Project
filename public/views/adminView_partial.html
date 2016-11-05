@@ -1,37 +1,99 @@
-<div><strong>Admin View</strong></div>
+<div class="container" ng-controller="MainCtrl">
+  <div class="row">
+    <div class="col-sm-4">
+      <h4>Administrator View</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-4">
+      <p><strong>Create new product</strong></p>
+      <div class="table-responsive">
+        <form name="newProductForm" id="newProductForm" ng-submit="createProductAndShowList(newProduct)">
+          <table class="table">
+            <tr>
+              <td>Name:</td><td><input type="text" ng-model="newProduct.name"></td>
+            </tr>
+            <tr>
+              <td>Description:</td><td><input type="text" ng-model="newProduct.description"></td>
+            </tr>
+            <tr>
+              <td>Type:</td><td><input type="text" ng-model="newProduct.type"></td>
+            </tr>
+            <tr>
+              <td>Onhand:</td><td><input type="text" ng-model="newProduct.onhand"></td>
+            </tr>
+            <tr>
+              <td>Price:</td><td><input type="text" ng-model="newProduct.price"></td>
+            </tr>
+          </table>
+          <div>
+            <input type="submit" id="submitNew" value="Add Product"/>
+          </div>
+        </form>
+        <div class="error-message">{{ errorMessage }}</div>
+        <div id="newProductDisplay" ng-show="newProductCreated">
+          Successfully created {{ newProductName }}. <button ng-click="hideNewProductDisplay()">Hide</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <p><strong>Product Maintenance</strong></p>
+      <div ng-hide="editMode" class="table-responsive">
+        <table class="table">
+          <tr>
+            <th>
+              Product Name
+            </th>
+            <th>
+              Actions
+            </th>
+          </tr>
+          <tr ng-repeat="product in products">
+            <td>
+              {{ product.name }}
+            </td>
+            <td>
+              <button ng-click="editProduct(product)">Edit</button>
+              <button ng-click="deleteProduct(product._id)">Delete</button>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div ng-show="editMode">
+        <div class="table-responsive">
+          <form ng-submit="updateProduct(productToEdit)">
+            <table class="table">
+              <tr>
+                <td>Name:</td><td><input type="text" ng-model="productToEdit.name"></td>
+              </tr>
+              <tr>
+                <td>Description:</td><td><input type="text" ng-model="productToEdit.description"></td>
+              </tr>
+              <tr>
+                <td>Type:</td><td><input type="text" ng-model="productToEdit.type"></td>
+              </tr>
+              <tr>
+                <td>Onhand:</td><td><input type="text" ng-model="productToEdit.onhand"></td>
+              </tr>
+              <tr>
+                <td>Price:</td><td><input type="text" ng-model="productToEdit.price"></td>
+              </tr>
+              <tr>
+                <td>
+                  <input type="submit" id="submitChange" value="Save Changes"/>
+                </td>
+                <td>
+                  <a ng-click="cancelEdit()" style="cursor: pointer">Cancel</a>
+                </td>
+              </tr>
+            </table>
+          </form>
+          <!-- <p>
+            <button ng-click="cancelEdit()">Cancel</button>
+          </p> -->
+        </div>
+      </div>
+    </div>
+  </div>
 
-<form name="newProductForm" id="newProductForm" ng-submit="createProductAndShowList(newProduct)">
-  Name: <input type="text" ng-model="newProduct.name"><br/>
-  Description: <input type="text" ng-model="newProduct.description"><br/>
-  Type: <input type="text" ng-model="newProduct.type"><br/>
-  Onhand: <input type="text" ng-model="newProduct.onhand"><br/>
-  Price: <input type="text" ng-model="newProduct.price"><br/>
-  <input type="submit" id="submitNew" value="Add Product"/>
-</form>
-<div class="error-message">{{ errorMessage }}</div>
-
-<div id="newProductDisplay" ng-show="newProductCreated">
-  Successfully created {{ newProduct.name }}. <button ng-click="hideNewProductDisplay()">Hide</button>
-</div>
-
-<div id="productList">
-  <ul>
-    <li ng-repeat="product in products">
-      {{ product.name }}
-      <button ng-click="editProduct(product)">Edit</button>
-      <button ng-click="deleteProduct(product.id)">Delete</button>
-    </li>
-  </ul>
-</div>
-
-<div id="editProductDialog" ng-show="editMode">
-  <form ng-submit="updateProduct(productToEdit)">
-    Name: <input type="text" ng-model="productToEdit.name"><br/>
-    Description: <input type="text" ng-model="productToEdit.description"><br/>
-    Type: <input type="text" ng-model="productToEdit.type"><br/>
-    Onhand: <input type="text" ng-model="productToEdit.onhand"><br/>
-    Price: <input type="text" ng-model="productToEdit.price"><br/>
-    <input type="submit" id="submitChange" value="Save Changes"/>
-  </form>
-  <button ng-click="cancelEdit()">Cancel</button>
 </div>
