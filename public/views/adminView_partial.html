@@ -1,25 +1,37 @@
 <div><strong>Admin View</strong></div>
 
-<form ng-submit="createProduct(newProduct)">
+<form name="newProductForm" id="newProductForm" ng-submit="createProductAndShowList(newProduct)">
   Name: <input type="text" ng-model="newProduct.name"><br/>
   Description: <input type="text" ng-model="newProduct.description"><br/>
   Type: <input type="text" ng-model="newProduct.type"><br/>
   Onhand: <input type="text" ng-model="newProduct.onhand"><br/>
   Price: <input type="text" ng-model="newProduct.price"><br/>
-  <input type="submit" id="submit" value="Add Product"/>
+  <input type="submit" id="submitNew" value="Add Product"/>
 </form>
 <div class="error-message">{{ errorMessage }}</div>
 
-<div id="newProductDisplay" ng-show="newProduct">
-  Successfully created {{ newProduct.name }}. <button ng-click="newProduct = null">Hide</button>
+<div id="newProductDisplay" ng-show="newProductCreated">
+  Successfully created {{ newProduct.name }}. <button ng-click="hideNewProductDisplay()">Hide</button>
 </div>
 
 <div id="productList">
   <ul>
     <li ng-repeat="product in products">
       {{ product.name }}
-      <button>Edit</button>
-      <button>Delete</button>
+      <button ng-click="editProduct(product)">Edit</button>
+      <button ng-click="deleteProduct(product.id)">Delete</button>
     </li>
   </ul>
+</div>
+
+<div id="editProductDialog" ng-show="editMode">
+  <form ng-submit="updateProduct(productToEdit)">
+    Name: <input type="text" ng-model="productToEdit.name"><br/>
+    Description: <input type="text" ng-model="productToEdit.description"><br/>
+    Type: <input type="text" ng-model="productToEdit.type"><br/>
+    Onhand: <input type="text" ng-model="productToEdit.onhand"><br/>
+    Price: <input type="text" ng-model="productToEdit.price"><br/>
+    <input type="submit" id="submitChange" value="Save Changes"/>
+  </form>
+  <button ng-click="cancelEdit()">Cancel</button>
 </div>

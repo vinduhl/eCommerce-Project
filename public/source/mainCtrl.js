@@ -2,8 +2,9 @@ app.controller("MainCtrl", ($scope, productService) => {
 
   $scope.testing = "This is a test";
   $scope.products = [];
-  $scope.newProduct = null;
-
+  $scope.newProduct = {};
+  $scope.editMode = false;
+  $scope.newProductCreated = false;
 
   $scope.getProducts = (productSearch) => {
 
@@ -26,6 +27,7 @@ app.controller("MainCtrl", ($scope, productService) => {
   $scope.createProduct = (newProduct) => {
 
     $scope.newProduct = null;
+    $scope.newProductCreated = false;
 
     productService.addProduct(newProduct)
       .then( (result) => {
@@ -33,14 +35,41 @@ app.controller("MainCtrl", ($scope, productService) => {
           $scope.errorMessage = result.error;
         } else {
           $scope.newProduct = result.data;
+          $scope.newProductCreated = true;
         }
       });
   };
 
   $scope.createProductAndShowList = (newProduct) => {
     $scope.createProduct(newProduct);
+    $scope.newProduct = {
+      name: "",
+      description: "",
+      type: "",
+      onhand: "",
+      price: ""
+    };
+    
     $scope.getProducts();
   };
 
+  $scope.editProduct = (product) => {
+    $scope.productToEdit = product;
+    $scope.editMode = true;
+  };
+
+  $scope.updateProduct = (product) => {
+    productService.updateProduct(product);
+    $scope.getProducts();
+    $scope.editMode = false;
+  }
+
+  $scope.cancelEdit = () => {
+    $scope.editMode = false;
+  }
+
+  $scope.hideNewProductDisplay = () => {
+    $scope.newProductCreated = false;
+  }
 
 });

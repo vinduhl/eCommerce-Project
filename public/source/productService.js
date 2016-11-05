@@ -37,13 +37,12 @@ app.service("productService", function($http, $q) {
       },
       (errorResponse) => {
         return new ProductResponse(errorResponse.data);
-      }
-    );
+      });
   };
 
   this.addProduct = (product) => {
     return $http
-      .post(`${baseUrl}products`)
+      .post(`${baseUrl}products`, product)
       .then( (response) => {
         return new ProductResponse(null, response.data);
       },
@@ -51,6 +50,19 @@ app.service("productService", function($http, $q) {
         return new ProductResponse(errorResponse.data);
       });
   };
+
+  this.updateProduct = (product) => {
+    return $http
+      .put(`${baseUrl}products/${product._id}`, product)
+      .then ( (response) => {
+        return new ProductResponse(null, response.data);
+      },
+      (errorResponse) => {
+        return new ProductResponse(errorResponse.data);
+      });
+  };
+
+
 
   function isPresent(field) {
     return field && field.trim() !== "";
