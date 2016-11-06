@@ -2,7 +2,10 @@ const express = require("express");
 const { json } = require("body-parser");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const routes = require("./features/product/productRoutes");
+const productRoutes = require("./features/product/productRoutes");
+const userRoutes = require("./features/user/userRoutes");
+const orderRoutes = require("./features/order/orderRoutes");
+const cartRoutes = require("./features/cart/cartRoutes");
 
 const app = express();
 app.use(json());
@@ -16,8 +19,10 @@ mongoose.connection.once("open", function() {
 });
 
 // Set up routes
-routes(app);
-
+productRoutes(app);
+userRoutes(app);
+orderRoutes(app);
+cartRoutes(app);
 
 const port = 8800;
 
