@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const Product = new mongoose.Schema( {
 
-  name: {type: String, required: true, lowercase: true, trim: true, minlength: 1},
+  name: {type: String, required: true, trim: true, minlength: 1},
   description: {type: String, required: true, trim: true, minlength: 1, maxlength: 30},
   type: {type: String, lowercase: true, enum: ["health", "electronics", "entertainment", "apparel"]},
   price: {type: Number, default: 0.00},

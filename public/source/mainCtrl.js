@@ -56,9 +56,11 @@ app.controller("MainCtrl", ($scope, productService) => {
     $scope.editMode = false;
   }
 
-  $scope.deleteProduct = (productId) => {
-    productService.deleteProduct(productId);
-    $scope.getProducts();
+  $scope.deleteProduct = (product) => {
+    if(confirm(`Are you sure you want to delete "${product.name}"?`)) {
+      productService.deleteProduct(product._id);
+      $scope.getProducts();
+    }
   }
 
   $scope.cancelEdit = () => {
