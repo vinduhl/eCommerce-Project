@@ -33,16 +33,42 @@ module.exports = {
     }
   },
 
-  // updateItemInCart(req, res) {
-  //   if(req.params.user_id) {
-  //     req.body.user = req.params.user_id;
-  //     new Order(req.body).save((err, order) => {
-  //       if(err) {
-  //         return res.status(500).json(err);
-  //       }
-  //       return res.status(201).json(order);
-  //     });
-  //   }
-  // }
+
+  updateItemInCart(req, res) {
+
+
+    let isChanged = false;
+    if(req.params.user_id) {
+      const cartId = req.body.cartId;
+      const userId = req.params.user_id;
+
+      User.findById(userId, (err, user) => {
+        if(err) {
+          return res.status(500).json(err);
+        }
+        if(!user) {
+          return res.status(400).json(`Cannot find user with id ${userId}`);
+        }
+
+        user.cart.forEach( (cartItem) => {
+          if(String(cartItem._id) === String(cartId)) {
+            cartItem.item.qty = req.body.qty;
+            isChanged = true;
+          }
+        });
+
+        if(isChanged) {
+          user.markModified("cart");
+          user.save();
+          return res.status(200).json(user.cart);
+        } else {
+          return res.status(200).json({message: `Change not made for user with id ${userId}` });
+        }
+      });
+    } else {
+      return res.status(500).json( {message: "User Id is required" });
+    }
+
+  }
 
 };
