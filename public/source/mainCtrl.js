@@ -1,9 +1,21 @@
-app.controller("MainCtrl", ($scope, productService) => {
+app.controller("MainCtrl", ($scope, $state, productService, userService) => {
 
-  $scope.testing = "This is a test";
   $scope.products = [];
+  $scope.users = [];
   $scope.editMode = false;
   $scope.newProductCreated = false;
+
+  userService.getUsers().then( (result) => {
+    if(result.error) {
+      $scope.errorMessage = result.error;
+    } else {
+      $scope.users = result.data;
+    }
+  });
+
+  $scope.isCustomerView = () => {
+    return $state.current.name === "home";
+  }
 
   $scope.getProducts = (productSearch) => {
 

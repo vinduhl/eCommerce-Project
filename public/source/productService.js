@@ -2,10 +2,6 @@ app.service("productService", function($http, $q) {
 
   const baseUrl = "http://localhost:8800/api/";
 
-  function ProductResponse(err = null, data = null) {
-    this.error = err;
-    this.data = data;
-  }
 
   this.getProducts = (productSearch) => {
 
@@ -33,10 +29,10 @@ app.service("productService", function($http, $q) {
     return $http
       .get(`${baseUrl}products${productId}${queryString}`)
       .then( (response) => {
-          return new ProductResponse(null, response.data);
+          return new APIResponse(null, response.data);
       },
       (errorResponse) => {
-        return new ProductResponse(errorResponse.data);
+        return new APIResponse(errorResponse.data);
       });
   };
 
@@ -44,10 +40,10 @@ app.service("productService", function($http, $q) {
     return $http
       .post(`${baseUrl}products`, product)
       .then( (response) => {
-        return new ProductResponse(null, response.data);
+        return new APIResponse(null, response.data);
       },
       (errorResponse) => {
-        return new ProductResponse(errorResponse.data);
+        return new APIResponse(errorResponse.data);
       });
   };
 
@@ -55,10 +51,10 @@ app.service("productService", function($http, $q) {
     return $http
       .put(`${baseUrl}products/${product._id}`, product)
       .then( (response) => {
-        return new ProductResponse(null, response.data);
+        return new APIResponse(null, response.data);
       },
       (errorResponse) => {
-        return new ProductResponse(errorResponse.data);
+        return new APIResponse(errorResponse.data);
       });
   };
 
@@ -66,10 +62,10 @@ app.service("productService", function($http, $q) {
     return $http
       .delete(`${baseUrl}products/${productId}`)
       .then( (response) => {
-        return new ProductResponse(null, response.data);
+        return new APIResponse(null, response.data);
       },
       (errorResponse) => {
-        return new ProductResponse(errorResponse.data);
+        return new APIResponse(errorResponse.data);
       });
   }
 

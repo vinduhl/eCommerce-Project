@@ -16,16 +16,20 @@ module.exports = {
     const userId = req.params.id;
     let promise;
     if(userId) {
-      promise = User.findById(userId);
-    } else {
-      promise = User.find();
-    }
-    promise.then((err, user) => {
+      User.findById(userId, (err, user) => {
         if(err) {
           return res.status(500).json(err);
         }
-        return res.status(200).json(user);
+        return res.status(200).json(user)
+      })
+    } else {
+      User.find({}, (err, user) => {
+        if(err) {
+          return res.status(500).json(err);
+        }
+        return res.status(200).json(user)
       });
+    }
   }
 
 };

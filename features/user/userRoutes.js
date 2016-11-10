@@ -6,4 +6,5 @@ module.exports = (app) => {
   app.get("/api/user/:id", controller.getUser);
   app.get("/api/user", controller.getUser);
 
+
 };

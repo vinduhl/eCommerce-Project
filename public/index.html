@@ -13,20 +13,27 @@
 <div class="container">
   <div class="row">
     <div class="col-sm-4">
+      <select ng-model="userSelection" ng-show="isCustomerView()">
+        <option ng-selected="$first" ng-repeat="user in users" value="user._id">{{ user.firstname }} {{ user.lastname }}</option>
+      </select>
     </div>
-    <div class="col-sm-4">
+    <div class="col-sm-8">
       <a ui-sref="home">Customer</a> | <a ui-sref="admin">Admin</a>
     </div>
   </div>
   <div class="row">
-    <ui-view></ui-view>
+    <div class="col-sm-12">
+      <ui-view></ui-view>
+    </div>
   </div>
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.js"></script>
 <script src="./source/app.js"></script>
+<script src="./source/utils.js"></script>
 <script src="./source/mainCtrl.js"></script>
 <script src="./source/productService.js"></script>
+<script src="./source/userService.js"></script>
 </body>
 </html>
