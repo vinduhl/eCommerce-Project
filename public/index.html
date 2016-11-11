@@ -13,8 +13,9 @@
 <div class="container">
   <div class="row">
     <div class="col-sm-4">
-      <select ng-model="userSelection" ng-show="isCustomerView()">
-        <option ng-selected="$first" ng-repeat="user in users" value="user._id">{{ user.firstname }} {{ user.lastname }}</option>
+      selected item is: {{ userSelection.firstname }}
+      <select ng-model="userSelection" ng-change="getCart(userSelection)" ng-show="isCustomerView()" ng-options="user.firstname + ' ' + user.lastname for user in users">
+        <!-- <option ng-selected="$first" ng-repeat="user in users" value="user._id">{{ user.firstname }} {{ user.lastname }}</option> -->
       </select>
     </div>
     <div class="col-sm-8">

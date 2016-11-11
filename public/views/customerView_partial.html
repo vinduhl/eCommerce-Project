@@ -1,4 +1,4 @@
-<div class="container" ng-controller="MainCtrl">
+<div class="container">
   <div class="row">
     <div class="col-sm-4">
       <h4>Customer View</h4>
@@ -25,7 +25,7 @@
       </div>
       <div class="error-message">{{ errorMessage }}</div>
     </div>
-    <div class="col-sm-4">
+    <div class="col-sm-5">
       <p><strong>Products</strong></p>
       <div class="table-responsive">
         <table class="table">
@@ -44,9 +44,19 @@
             <td>
               {{ product.description}}
             </td>
+            <td>
+              <input type="text" id="{{ product._id }}_qty" value="0">
+              <button ng-click="addToCart(product, userSelection)">Add to cart</button>
+            </td>
           </tr>
         </table>
       </div>
+    </div>
+    <div class="col-sm-3">
+      Cart:
+      <ul>
+        <li ng-repeat="item in cart">{{ item.product }}, qty: {{ item.qty }}</li>
+      </ul>
     </div>
   </div>
 </div>

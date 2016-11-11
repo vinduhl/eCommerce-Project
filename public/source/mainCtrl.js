@@ -6,10 +6,13 @@ app.controller("MainCtrl", ($scope, $state, productService, userService) => {
   $scope.newProductCreated = false;
 
   userService.getUsers().then( (result) => {
+    console.log("called userService.getUsers()");
     if(result.error) {
       $scope.errorMessage = result.error;
     } else {
       $scope.users = result.data;
+      $scope.userSelection = $scope.users[0];
+      $scope.getCart($scope.userSelection);
     }
   });
 
@@ -52,8 +55,11 @@ app.controller("MainCtrl", ($scope, $state, productService, userService) => {
   $scope.createProductAndShowList = (newProduct) => {
     const np = angular.copy(newProduct);
     $scope.createProduct(np);
-    $scope.newProductForm.$setPristine();
-    $scope.newProduct = {};
+    newProduct.name = "";
+    newProduct.description = "";
+    newProduct.type = "";
+    newProduct.onhand = "";
+    newProduct.price = "";
     $scope.getProducts();
   };
 
@@ -73,6 +79,32 @@ app.controller("MainCtrl", ($scope, $state, productService, userService) => {
       productService.deleteProduct(product._id);
       $scope.getProducts();
     }
+  }
+
+  $scope.addToCart = (product, user) => {
+    console.log("Here!!!!");
+    const qtyTextbox = document.getElementById(`${product._id}_qty`);
+    const qty = qtyTextbox.value;
+    qtyTextbox.value = "0";
+    console.log("product:", product);
+    console.log("user:", user);
+    console.log("qty:", qty);
+    if(user) {
+      userService.addToCart(user, product, qty);
+      $scope.getCart(user);
+    }
+
+  }
+
+  $scope.getCart = (user) => {
+    userService.getCart(user)
+      .then( (result) => {
+        if(result.error) {
+          $scope.errorMessage = result.error;
+        } else {
+          $scope.cart = result.data;
+        }
+      });
   }
 
   $scope.cancelEdit = () => {
