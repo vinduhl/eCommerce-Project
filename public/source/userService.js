@@ -22,6 +22,7 @@ app.service("userService", function($http) {
     return $http
       .post(`${baseUrl}cart/${user._id}`, item )
       .then( (response) => {
+        addTotalItemPrice(response.data);
         return new APIResponse(null, response.data);
       },
       (errorResponse) => {
@@ -33,11 +34,36 @@ app.service("userService", function($http) {
     return $http
       .get(`${baseUrl}cart/${user._id}`)
       .then( (response) => {
+        addTotalItemPrice(response.data);
         return new APIResponse(null, response.data);
       },
       (errorResponse) => {
         return new APIResponse(errorResponse.data);
       });
+  };
+
+  this.updateCart = (user, product) => {
+    let updateProduct = {
+      cartId: product._id,
+      qty: product.qty
+    };
+    return $http
+      .put(`${baseUrl}cart/${user._id}`, updateProduct)
+      .then( (response) => {
+        addTotalItemPrice(response.data);
+        return new APIResponse(null, response.data);
+      },
+      (errorResponse) => {
+        return new APIResponse(errorResponse.data);
+      });
+  }
+
+  function addTotalItemPrice(cart) {
+    if(cart && Array.isArray(cart)) {
+      cart.forEach( (item) => {
+        item.totalPrice = item.product.price * item.qty;
+      });
+    }
   }
 
 });

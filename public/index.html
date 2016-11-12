@@ -12,18 +12,18 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-sm-4">
+    <div class="col-md-4">
       selected item is: {{ userSelection.firstname }}
       <select ng-model="userSelection" ng-change="getCart(userSelection)" ng-show="isCustomerView()" ng-options="user.firstname + ' ' + user.lastname for user in users">
         <!-- <option ng-selected="$first" ng-repeat="user in users" value="user._id">{{ user.firstname }} {{ user.lastname }}</option> -->
       </select>
     </div>
-    <div class="col-sm-8">
+    <div class="col-md-8">
       <a ui-sref="home">Customer</a> | <a ui-sref="admin">Admin</a>
     </div>
   </div>
   <div class="row">
-    <div class="col-sm-12">
+    <div class="col-md-12">
       <ui-view></ui-view>
     </div>
   </div>
@@ -36,5 +36,7 @@
 <script src="./source/mainCtrl.js"></script>
 <script src="./source/productService.js"></script>
 <script src="./source/userService.js"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </body>
 </html>

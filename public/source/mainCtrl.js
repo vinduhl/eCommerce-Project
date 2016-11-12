@@ -4,9 +4,11 @@ app.controller("MainCtrl", ($scope, $state, productService, userService) => {
   $scope.users = [];
   $scope.editMode = false;
   $scope.newProductCreated = false;
+  $scope.totalCartItemQuantity = 0;
+  $scope.totalCartAmount = 0;
+  $scope.cart = [];
 
   userService.getUsers().then( (result) => {
-    console.log("called userService.getUsers()");
     if(result.error) {
       $scope.errorMessage = result.error;
     } else {
@@ -82,13 +84,9 @@ app.controller("MainCtrl", ($scope, $state, productService, userService) => {
   }
 
   $scope.addToCart = (product, user) => {
-    console.log("Here!!!!");
     const qtyTextbox = document.getElementById(`${product._id}_qty`);
     const qty = qtyTextbox.value;
-    qtyTextbox.value = "0";
-    console.log("product:", product);
-    console.log("user:", user);
-    console.log("qty:", qty);
+    qtyTextbox.value = "1";
     if(user) {
       userService.addToCart(user, product, qty);
       $scope.getCart(user);
@@ -103,6 +101,20 @@ app.controller("MainCtrl", ($scope, $state, productService, userService) => {
           $scope.errorMessage = result.error;
         } else {
           $scope.cart = result.data;
+          getTotalCartQuantityAndAmount($scope.cart);
+        }
+      });
+  }
+
+  $scope.updateCart = (user, product) => {
+    userService.updateCart(user, product)
+      .then( (result) => {
+        if(result.error) {
+          $scope.cartUpdateMessage = result.error;
+        } else {
+          $scope.cart = result.data;
+          getTotalCartQuantityAndAmount($scope.cart);
+          $scope.cartUpdateMessage = "Your cart has been updated.";
         }
       });
   }
@@ -113,6 +125,19 @@ app.controller("MainCtrl", ($scope, $state, productService, userService) => {
 
   $scope.hideNewProductDisplay = () => {
     $scope.newProductCreated = false;
+  }
+
+  function getTotalCartQuantityAndAmount(cart) {
+    let totalCartQty = 0;
+    let totalCartAmount = 0;
+    if(cart && Array.isArray(cart)) {
+      cart.forEach( (item) => {
+        totalCartQty += item.qty;
+        totalCartAmount += item.totalPrice;
+      })
+    }
+    $scope.totalCartItemQuantity = totalCartQty;
+    $scope.totalCartAmount = totalCartAmount;
   }
 
 });

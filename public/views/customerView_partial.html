@@ -1,62 +1,146 @@
 <div class="container">
   <div class="row">
-    <div class="col-sm-4">
+    <div class="col-md-12">
       <h4>Customer View</h4>
     </div>
   </div>
+
   <div class="row">
-    <div class="col-sm-4">
-      <p><strong>Search Products</strong></p>
-      <div class="table-responsive">
-        <table class="table">
-          <tr>
-            <td>Product Name:</td><td><input type="text" ng-model="prod.productName"/></td>
-          </tr>
-          <tr>
-            <td>Product ID:</td><td><input type="text" ng-model="prod.productId"/></td>
-          </tr>
-          <tr>
-            <td>Product Type:</td><td><input type="text" ng-model="prod.productType"/></td>
-          </tr>
-        </table>
-      </div>
-      <div>
-        <button ng-click="getProducts(prod)">Find Product</button>
-      </div>
-      <div class="error-message">{{ errorMessage }}</div>
+
+    <div class="col-md-4">
+
+      <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+
+        <div class="panel panel-default">
+          <div class="panel-heading" role="tab" id="headingSearch">
+            <strong class="panel-title">
+              <a href="#collapseSearch" data-toggle="collapse" data-parent="#accordion" aria-expanded="false" aria-controls="collapseCart">
+              Search Products
+              </a>
+            </strong>
+          </div>
+          <div id="collapseSearch" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSearch">
+            <div class="panel-body">
+              <div class="navbar-form navbar-left">
+                <div class="table-responsive form-group">
+                  <table class="table">
+                    <tr>
+                      <td>Product Name:</td><td><input type="text" class="form-control" ng-model="prod.productName"/></td>
+                    </tr>
+                    <tr>
+                      <td>Product ID:</td><td><input type="text" class="form-control" ng-model="prod.productId"/></td>
+                    </tr>
+                    <tr>
+                      <td>Product Type:</td><td><input type="text" class="form-control" ng-model="prod.productType"/></td>
+                    </tr>
+                  </table>
+                </div>
+                <div>
+                  <button class="btn btn-default" ng-click="getProducts(prod)">Find Product</button>
+                </div>
+                <div class="error-message">{{ errorMessage }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- *** CART *** -->
+        <div class="panel panel-default">
+          <div class="panel-heading" role="tab" id="headingCart">
+            <strong class="panel-title">
+              <a href="#collapseCart" data-toggle="collapse" data-parent="#accordion" aria-expanded="false" aria-controls="collapseCart">
+                Cart
+              </a>
+            </strong>
+            <span class="glyphicon glyphicon-shopping-cart"></span>
+            Items in your cart:
+            <span class="badge">{{ totalCartItemQuantity }}</span>
+          </div>
+          <div id="collapseCart" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingCart">
+            <div class="panel-body fixed-panel">
+              <div class="row">
+                <div class="col-md-12">
+                  <span>Total items in cart: {{ totalCartItemQuantity }}</span>
+                  <span class="cart-update-message">{{ cartUpdateMessage }}</span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="table-responsive">
+                    <table class="table">
+                      <tr ng-repeat="item in cart">
+                        <td>
+                        <strong>{{ item.product.name }}</strong><br/>
+                        {{ item.product.description }}<br/>
+                        ${{ item.product.price }} x <input class="cart-qty-input" type="text" ng-model="item.qty"/>
+                        = ${{ item.totalPrice }}
+                        </td>
+                        <td>
+                          <a class="link" ng-click="updateCart(userSelection, item)"><span class="glyphicon glyphicon-refresh"></span>
+                            Update Quantity</a><br/>
+                          <a class="link" ng-click="item.qty = 0; updateCart(userSelection, item)"><span class="glyphicon glyphicon-minus-sign"></span>
+                            Remove Item</a>
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="panel-footer">
+              Total Cart Amount: ${{ totalCartAmount }}
+              <button class="btn btn-default">Checkout</button>
+            </div>
+          </div>
+        </div>
+        <!-- *** End CART *** -->
+
+      </div> <!-- *** End Panel-Group *** -->
     </div>
-    <div class="col-sm-5">
-      <p><strong>Products</strong></p>
-      <div class="table-responsive">
-        <table class="table">
-          <tr>
-            <th>
-              Product Name
-            </th>
-            <th>
-              Description
-            </th>
-          </tr>
-          <tr ng-repeat="product in products">
-            <td>
-              {{ product.name }}
-            </td>
-            <td>
-              {{ product.description}}
-            </td>
-            <td>
-              <input type="text" id="{{ product._id }}_qty" value="0">
-              <button ng-click="addToCart(product, userSelection)">Add to cart</button>
-            </td>
-          </tr>
-        </table>
+
+
+    <div class="col-md-8">
+      <div class="row">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <strong class="panel-title">Products</strong>
+          </div>
+          <div class="panel-body">
+            <div class="table-responsive">
+              <table class="table">
+                <tr>
+                  <th>
+                    Product Name
+                  </th>
+                  <th>
+                    Description
+                  </th>
+                  <th>Qty</th>
+                  <th>Action</th>
+                </tr>
+                <tr ng-repeat="product in products">
+                  <td>
+                    {{ product.name }}
+                  </td>
+                  <td>
+                    {{ product.description}}<br/>
+                    Unit price: ${{ product.price }}
+                  </td>
+                  <td>
+                    <input type="text" id="{{ product._id }}_qty" class="product-list-qty-input form-control" value="1">
+                  </td>
+                  <td>
+                    <a class="link" ng-click="addToCart(product, userSelection)"><span class="glyphicon glyphicon-plus-sign"></span>
+                      <span class="icon-label">Add to Cart</span></a>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="col-sm-3">
-      Cart:
-      <ul>
-        <li ng-repeat="item in cart">{{ item.product }}, qty: {{ item.qty }}</li>
-      </ul>
-    </div>
-  </div>
+
+
+  </div> <!-- row -->
 </div>

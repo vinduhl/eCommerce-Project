@@ -7,5 +7,4 @@ const Cart = new mongoose.Schema(
   }
 );
 
-
 module.exports = Cart;

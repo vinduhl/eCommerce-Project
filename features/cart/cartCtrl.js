@@ -40,12 +40,15 @@ module.exports = {
 
   updateItemInCart(req, res) {
 
-    let isChanged = false;
+    let cartIsChanged = false;
+
     if(req.params.user_id) {
       const cartId = req.body.cartId;
       const userId = req.params.user_id;
 
-      User.findById(userId, (err, user) => {
+      User.findById(userId)
+        .populate("cart.product")
+        .exec( (err, user) => {
         if(err) {
           return res.status(500).json(err);
         }
@@ -53,14 +56,24 @@ module.exports = {
           return res.status(400).json(`Cannot find user with id ${userId}`);
         }
 
-        user.cart.forEach( (cartItem) => {
-          if(String(cartItem._id) === String(cartId)) {
-            cartItem.qty = req.body.qty;
-            isChanged = true;
+        if(req.body.qty > 0) {
+          user.cart.forEach( (cartItem) => {
+            if(String(cartItem._id) === String(cartId)) {
+              cartItem.qty = req.body.qty;
+              cartIsChanged = true;
+            }
+          });
+        } else { // delete item from cart if qty === 0
+          for(let i = 0; i < user.cart.length; i++) {
+            if(String(user.cart[i]._id) === String(cartId)) {
+              user.cart.splice(i, 1);
+              cartIsChanged = true;
+              break;
+            }
           }
-        });
+        }
 
-        if(isChanged) {
+        if(cartIsChanged) {
           user.markModified("cart");
           user.save();
           return res.status(200).json(user.cart);
@@ -89,12 +102,13 @@ module.exports = {
         if(!user) {
           return res.status(400).json(`Cannot find user with id ${userId}`);
         }
+
         return res.status(200).json(user.cart);
 
       });
     } else {
       return res.status(500).json( {message: "User Id is required" });
     }
-  }
+  },
 
 };

@@ -1,3 +1,32 @@
 .error-message {
   color: red;
+  height: 20px;
+}
+
+.cart-update-message {
+  color: blue;
+  height: 20px;
+}
+
+.cart-qty-input {
+  width: 30px;
+}
+
+
+.product-list-qty-input {
+  width: 50px;
+}
+
+.link {
+  cursor: pointer;
+}
+
+.icon-label {
+  padding-left: 2px;
+}
+
+.fixed-panel {
+  min-height: 200px;
+  max-height: 400px;
+  overflow-y: scroll;
 }

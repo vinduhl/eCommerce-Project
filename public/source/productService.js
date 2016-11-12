@@ -24,8 +24,7 @@ app.service("productService", function($http, $q) {
     if(queryArray.length > 0) {
       queryString = `?${queryArray.join("&")}`;
     }
-    console.log("Path:");
-    console.log(`${baseUrl}products${productId}${queryString}`);
+
     return $http
       .get(`${baseUrl}products${productId}${queryString}`)
       .then( (response) => {
