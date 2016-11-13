@@ -74,12 +74,14 @@ app.controller("MainCtrl", ($scope, $state, productService, userService) => {
     productService.updateProduct(product);
     $scope.getProducts();
     $scope.editMode = false;
+    $scope.getProductCountByCategory();
   };
 
   $scope.deleteProduct = (product) => {
     if(confirm(`Are you sure you want to delete "${product.name}"?`)) {
       productService.deleteProduct(product._id);
       $scope.getProducts();
+      $scope.getProductCountByCategory();
     }
   };
 
