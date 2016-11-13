@@ -11,39 +11,6 @@
 
       <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 
-        <div class="panel panel-default">
-          <div class="panel-heading" role="tab" id="headingSearch">
-            <strong class="panel-title">
-              <a href="#collapseSearch" data-toggle="collapse" data-parent="#accordion" aria-expanded="false" aria-controls="collapseCart">
-              Search Products
-              </a>
-            </strong>
-          </div>
-          <div id="collapseSearch" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSearch">
-            <div class="panel-body">
-              <div class="navbar-form navbar-left">
-                <div class="table-responsive form-group">
-                  <table class="table">
-                    <tr>
-                      <td>Product Name:</td><td><input type="text" class="form-control" ng-model="prod.productName"/></td>
-                    </tr>
-                    <tr>
-                      <td>Product ID:</td><td><input type="text" class="form-control" ng-model="prod.productId"/></td>
-                    </tr>
-                    <tr>
-                      <td>Product Type:</td><td><input type="text" class="form-control" ng-model="prod.productType"/></td>
-                    </tr>
-                  </table>
-                </div>
-                <div>
-                  <button class="btn btn-default" ng-click="getProducts(prod)">Find Product</button>
-                </div>
-                <div class="error-message">{{ errorMessage }}</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
         <!-- *** CART *** -->
         <div class="panel panel-default">
           <div class="panel-heading" role="tab" id="headingCart">
@@ -94,6 +61,60 @@
           </div>
         </div>
         <!-- *** End CART *** -->
+
+        <!-- *** SEARCH *** -->
+        <div class="panel panel-default">
+          <div class="panel-heading" role="tab" id="headingSearch">
+            <strong class="panel-title">
+              <a href="#collapseSearch" data-toggle="collapse" data-parent="#accordion" aria-expanded="false" aria-controls="collapseCart">
+              Search Products
+              </a>
+            </strong>
+          </div>
+          <div id="collapseSearch" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSearch">
+            <div class="panel-body">
+              <div class="navbar-form navbar-left">
+                <div class="table-responsive form-group">
+                  <table class="table">
+                    <tr>
+                      <td>Product Name:</td><td><input type="text" class="form-control" ng-model="prod.productName"/></td>
+                    </tr>
+                    <tr>
+                      <td>Product ID:</td><td><input type="text" class="form-control" ng-model="prod.productId"/></td>
+                    </tr>
+                    <tr>
+                      <td>Product Type:</td><td><input type="text" class="form-control" ng-model="prod.productType"/></td>
+                    </tr>
+                  </table>
+                </div>
+                <div>
+                  <button class="btn btn-default" ng-click="getProducts(prod)">Find Product</button>
+                </div>
+                <div class="error-message">{{ errorMessage }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- *** End SEARCH *** -->
+
+        <!-- *** PRODUCT CATEGORIES *** -->
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <strong class="panel-title">
+              Product Categories
+            </strong>
+          </div>
+          <div class="panel-body">
+            <div class="table-responsive">
+              <table class="table">
+                <tr ng-repeat="category in productCountByCategory">
+                  <td>{{ category._id }} ({{ category.count }})</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+        <!-- *** End PRODUCT CATEGORIES *** -->
 
       </div> <!-- *** End Panel-Group *** -->
     </div>

@@ -1,4 +1,4 @@
-const Product = require("./Product").product;
+const { Product, enumProductTypes } = require("./Product");
 
 module.exports = {
 
@@ -59,6 +59,22 @@ module.exports = {
         return res.status(200).json(deletedProduct);
       });
     }
+  },
+
+  getProductCountByCategory(req, res) {
+    Product.aggregate([
+      {"$group" : {_id: "$type", count:{$sum:1} }}
+    ],  (err, types) => {
+      if(err) {
+        return res.status(500).json(err);
+      } else {
+      return res.status(200).json(types);
+      }
+    });
+  },
+
+  getProductCategories(req, res) {
+    return res.status(200).json(enumProductTypes);
   }
 
 };

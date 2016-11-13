@@ -6,43 +6,73 @@
   </div>
   <div class="row">
     <div class="col-md-4">
+
       <div class="panel panel-default">
         <div class="panel-heading">
           <strong class="panel-title">Create new product</strong><br/>
         </div>
         <div class="panel-body">
           <div class="row">
-            <form name="newProductForm col-md-12" class="navbar-form navbar-left" ng-submit="createProductAndShowList(newProduct)">
-              <div class="form-group table-responsive">
-                <table class="table">
-                  <tr>
-                    <td>Name:</td><td><input type="text" class="form-control" ng-model="newProduct.name"></td>
-                  </tr>
-                  <tr>
-                    <td>Description:</td><td><input type="text" class="form-control" ng-model="newProduct.description"></td>
-                  </tr>
-                  <tr>
-                    <td>Type:</td><td><input type="text" class="form-control" ng-model="newProduct.type"></td>
-                  </tr>
-                  <tr>
-                    <td>Onhand:</td><td><input type="text" class="form-control" ng-model="newProduct.onhand"></td>
-                  </tr>
-                  <tr>
-                    <td>Price:</td><td><input type="text" class="form-control" ng-model="newProduct.price"></td>
-                  </tr>
-                </table>
-              </div>
-              <div>
-                <input type="submit" class="btn btn-default" id="submitNew" value="Add Product"/>
-              </div>
-            </form>
+            <div class="col-md-12">
+              <form name="newProductForm" class="navbar-form navbar-left" ng-submit="createProductAndShowList(newProduct)">
+                <div class="form-group table-responsive">
+                  <table class="table">
+                    <tr>
+                      <td>Name:</td><td><input type="text" class="form-control" ng-model="newProduct.name"></td>
+                    </tr>
+                    <tr>
+                      <td>Description:</td><td><input type="text" class="form-control" ng-model="newProduct.description"></td>
+                    </tr>
+                    <tr>
+                      <td>Type:</td><td>
+                        <select name="productType" ng-model="newProduct.type" class="form-control" style="width:100%"
+                          ng-options="type for type in productCategories"></select>
+                    </td>
+                    </tr>
+                    <tr>
+                      <td>Onhand:</td><td><input type="text" class="form-control" ng-model="newProduct.onhand"></td>
+                    </tr>
+                    <tr>
+                      <td>Price:</td><td><input type="text" class="form-control" ng-model="newProduct.price"></td>
+                    </tr>
+                  </table>
+                </div>
+                <div>
+                  <input type="submit" class="btn btn-default" id="submitNew" value="Add Product"/>
+                </div>
+              </form>
+            </div>
           </div>
-          <div class="error-message col-md-12">{{ errorMessage }}</div>
-          <div id="newProductDisplay col-md-12" ng-show="newProductCreated">
-            Successfully created {{ newProductName }}. <button ng-click="hideNewProductDisplay()">Hide</button>
+          <div class="row">
+            <div class="error-message col-md-12">{{ errorMessage }}</div>
+          </div>
+          <div class="row">
+            <div id="newProductDisplay col-md-12" ng-show="newProductCreated">
+              Successfully created {{ newProductName }}. <button ng-click="hideNewProductDisplay()">Hide</button>
+            </div>
+        </div>
+        </div>
+      </div>
+
+      <!-- *** PRODUCT CATEGORIES *** -->
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <strong class="panel-title">
+            Product Categories
+          </strong>
+        </div>
+        <div class="panel-body">
+          <div class="table-responsive">
+            <table class="table">
+              <tr ng-repeat="category in productCountByCategory">
+                <td>{{ category._id }} ({{ category.count }})</td>
+              </tr>
+            </table>
           </div>
         </div>
       </div>
+      <!-- *** End PRODUCT CATEGORIES *** -->
+
     </div>
 
     <div class="col-md-8">
@@ -84,23 +114,27 @@
                     </th>
                   </tr>
                   <tr>
-                    <td>Name:</td><td><input type="text" ng-model="productToEdit.name"></td>
+                    <td>Name:</td><td><input type="text" ng-model="productToEdit.name" class="form-control"></td>
                   </tr>
                   <tr>
-                    <td>Description:</td><td><input type="text" ng-model="productToEdit.description"></td>
+                    <td>Description:</td><td><input type="text" ng-model="productToEdit.description" class="form-control"></td>
                   </tr>
                   <tr>
-                    <td>Type:</td><td><input type="text" ng-model="productToEdit.type"></td>
+                    <td>Type:</td><td>
+                      <!-- <input type="text" ng-model="productToEdit.type"> -->
+                      <select name="productType" ng-model="productToEdit.type" class="form-control"
+                        ng-options="type for type in productCategories"></select>
+                    </td>
                   </tr>
                   <tr>
-                    <td>Onhand:</td><td><input type="text" ng-model="productToEdit.onhand"></td>
+                    <td>Onhand:</td><td><input type="text" ng-model="productToEdit.onhand" class="form-control"></td>
                   </tr>
                   <tr>
-                    <td>Price:</td><td><input type="text" ng-model="productToEdit.price"></td>
+                    <td>Price:</td><td><input type="text" ng-model="productToEdit.price" class="form-control"></td>
                   </tr>
                   <tr>
                     <td>
-                      <input type="submit" id="submitChange" value="Save Changes"/>
+                      <input type="submit" id="submitChange" class="btn btn-default" value="Save Changes"/>
                     </td>
                     <td>
                       <a ng-click="cancelEdit()" style="cursor: pointer">Cancel</a>

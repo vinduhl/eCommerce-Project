@@ -20,7 +20,7 @@ app.controller("MainCtrl", ($scope, $state, productService, userService) => {
 
   $scope.isCustomerView = () => {
     return $state.current.name === "home";
-  }
+  };
 
   $scope.getProducts = (productSearch) => {
 
@@ -74,14 +74,14 @@ app.controller("MainCtrl", ($scope, $state, productService, userService) => {
     productService.updateProduct(product);
     $scope.getProducts();
     $scope.editMode = false;
-  }
+  };
 
   $scope.deleteProduct = (product) => {
     if(confirm(`Are you sure you want to delete "${product.name}"?`)) {
       productService.deleteProduct(product._id);
       $scope.getProducts();
     }
-  }
+  };
 
   $scope.addToCart = (product, user) => {
     const qtyTextbox = document.getElementById(`${product._id}_qty`);
@@ -92,7 +92,7 @@ app.controller("MainCtrl", ($scope, $state, productService, userService) => {
       $scope.getCart(user);
     }
 
-  }
+  };
 
   $scope.getCart = (user) => {
     userService.getCart(user)
@@ -104,7 +104,7 @@ app.controller("MainCtrl", ($scope, $state, productService, userService) => {
           getTotalCartQuantityAndAmount($scope.cart);
         }
       });
-  }
+  };
 
   $scope.updateCart = (user, product) => {
     userService.updateCart(user, product)
@@ -117,15 +117,41 @@ app.controller("MainCtrl", ($scope, $state, productService, userService) => {
           $scope.cartUpdateMessage = "Your cart has been updated.";
         }
       });
-  }
+  };
 
   $scope.cancelEdit = () => {
     $scope.editMode = false;
-  }
+  };
 
   $scope.hideNewProductDisplay = () => {
     $scope.newProductCreated = false;
-  }
+  };
+
+  $scope.getProductCategories = () => {
+    productService.getProductCategories()
+      .then( (result) => {
+        if(result.error) {
+          $scope.errorMessage = result.error;
+        } else {
+          $scope.productCategories = result.data;
+        }
+      });
+  };
+  $scope.getProductCategories();
+
+  $scope.getProductCountByCategory = () => {
+    productService.getProductCountByCategory()
+      .then( (result) => {
+        if(result.error) {
+          $scope.errorMessage = result.error;
+        } else {
+          $scope.productCountByCategory = result.data;
+        }
+      });
+  };
+  $scope.getProductCountByCategory();
+
+
 
   function getTotalCartQuantityAndAmount(cart) {
     let totalCartQty = 0;
@@ -134,7 +160,7 @@ app.controller("MainCtrl", ($scope, $state, productService, userService) => {
       cart.forEach( (item) => {
         totalCartQty += item.qty;
         totalCartAmount += item.totalPrice;
-      })
+      });
     }
     $scope.totalCartItemQuantity = totalCartQty;
     $scope.totalCartAmount = totalCartAmount;

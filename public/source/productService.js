@@ -66,7 +66,29 @@ app.service("productService", function($http, $q) {
       (errorResponse) => {
         return new APIResponse(errorResponse.data);
       });
-  }
+  };
+
+  this.getProductCategories = () => {
+    return $http
+      .get(`${baseUrl}products/categories`)
+      .then( (response) => {
+        return new APIResponse(null, response.data);
+      },
+      (errorResponse) => {
+        return new APIResponse(errorResponse.data);
+      });
+  };
+
+  this.getProductCountByCategory = () => {
+    return $http
+      .get(`${baseUrl}products/categories/count`)
+      .then( (response) => {
+        return new APIResponse(null, response.data);
+      },
+      (errorResponse) => {
+        return new APIResponse(errorResponse.data);
+      });
+  };
 
 
   function isPresent(field) {
