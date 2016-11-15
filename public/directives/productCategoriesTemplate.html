@@ -1,0 +1,8 @@
+
+<div class="table-responsive">
+  <table class="table">
+    <tr ng-repeat="category in productCountByCategory">
+      <td><a ng-click="getProductsByCategory(category._id)" class="link">{{ category._id }} ({{ category.count }})</a></td>
+    </tr>
+  </table>
+</div>

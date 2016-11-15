@@ -89,6 +89,7 @@
                 </div>
                 <div>
                   <button class="btn btn-default" ng-click="getProducts(prod)">Find Product</button>
+                  <button class="btn btn-default" ng-click="clearSearchFields(prod)">Clear Search</button>
                 </div>
                 <div class="error-message">{{ errorMessage }}</div>
               </div>
@@ -105,13 +106,7 @@
             </strong>
           </div>
           <div class="panel-body">
-            <div class="table-responsive">
-              <table class="table">
-                <tr ng-repeat="category in productCountByCategory">
-                  <td>{{ category._id }} ({{ category.count }})</td>
-                </tr>
-              </table>
-            </div>
+            <product-categories get-products="getProducts"></product-categories>
           </div>
         </div>
         <!-- *** End PRODUCT CATEGORIES *** -->

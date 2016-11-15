@@ -1,4 +1,4 @@
-app.controller("MainCtrl", ($scope, $state, productService, userService) => {
+app.controller("MainCtrl", function($scope, $rootScope, $state, productService, userService) {
 
   $scope.products = [];
   $scope.users = [];
@@ -25,7 +25,6 @@ app.controller("MainCtrl", ($scope, $state, productService, userService) => {
   $scope.getProducts = (productSearch) => {
 
     $scope.errorMessage = "";
-
     productService.getProducts(productSearch)
       .then( (result) => {
         if(result.error) {
@@ -35,8 +34,24 @@ app.controller("MainCtrl", ($scope, $state, productService, userService) => {
         }
       });
   };
-
   $scope.getProducts();
+
+
+  // $scope.getProductsByCategory = (category) => {
+  //   const productSearch = {
+  //     productType: category
+  //   }
+  //   $scope.getProducts(productSearch);
+  // }
+
+
+  $scope.clearSearchFields = (productSearch) => {
+    for(let field in productSearch) {
+      if(productSearch.hasOwnProperty(field)) {
+        productSearch[field] = "";
+      }
+    }
+  }
 
   $scope.createProduct = (newProduct) => {
 
@@ -57,11 +72,11 @@ app.controller("MainCtrl", ($scope, $state, productService, userService) => {
   $scope.createProductAndShowList = (newProduct) => {
     const np = angular.copy(newProduct);
     $scope.createProduct(np);
-    newProduct.name = "";
-    newProduct.description = "";
-    newProduct.type = "";
-    newProduct.onhand = "";
-    newProduct.price = "";
+    for(let field in newProduct) {
+      if(newProduct.hasOwnProperty(field)) {
+        newProduct[field] = "";
+      }
+    }
     $scope.getProducts();
   };
 
@@ -141,18 +156,23 @@ app.controller("MainCtrl", ($scope, $state, productService, userService) => {
   };
   $scope.getProductCategories();
 
-  $scope.getProductCountByCategory = () => {
-    productService.getProductCountByCategory()
-      .then( (result) => {
-        if(result.error) {
-          $scope.errorMessage = result.error;
-        } else {
-          $scope.productCountByCategory = result.data;
-        }
-      });
-  };
-  $scope.getProductCountByCategory();
+  // $scope.getProductCountByCategory = () => {
+  //   productService.getProductCountByCategory()
+  //     .then( (result) => {
+  //       if(result.error) {
+  //         $scope.errorMessage = result.error;
+  //       } else {
+  //         $scope.productCountByCategory = result.data;
+  //       }
+  //     });
+  // };
+  // $scope.getProductCountByCategory();
 
+  // $scope.runThis = () => {
+  //   $rootScope.$emit("loadProductCategories", {});
+  //   console.log("Testing here here here");
+  // }
+  // $scope.runThis();
 
 
   function getTotalCartQuantityAndAmount(cart) {
