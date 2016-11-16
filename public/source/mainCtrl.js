@@ -94,10 +94,29 @@ app.controller("MainCtrl", function($scope, $rootScope, $state, productService, 
   $scope.addToCart = (product, user) => {
     const qtyTextbox = document.getElementById(`${product._id}_qty`);
     const qty = qtyTextbox.value;
-    qtyTextbox.value = "1";
-    if(user) {
-      userService.addToCart(user, product, qty);
-      $scope.getCart(user);
+
+    // Look through the cart to see if the product already exists
+    const cart = $scope.cart;
+    let itemAlreadyInCart = null;
+    for(let i in cart) {
+      if(cart[i].product._id === product._id) {
+        itemAlreadyInCart = cart[i];
+        break;
+      }
+    }
+
+    // If item already exists in the cart, then just update that item if shopper wants
+    if(itemAlreadyInCart) {
+      if(confirm(`${product.name} is already in your cart. Do you want to add ${qty} to it?`)) {
+        itemAlreadyInCart.qty += Number(qty);
+        $scope.updateCart(user, itemAlreadyInCart);
+      }
+    } else {
+      qtyTextbox.value = "1";
+      if(user) {
+        userService.addToCart(user, product, qty);
+        $scope.getCart(user);
+      }
     }
 
   };

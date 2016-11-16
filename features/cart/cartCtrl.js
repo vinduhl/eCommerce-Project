@@ -5,10 +5,6 @@ module.exports = {
   addItemToCart(req, res) {
     if(req.params.user_id) {
 
-      // if(!req.body.item) {
-      //   return res.status(500).json({message: "Missing 'item' node in req.body to add to cart"});
-      // }
-
       if(!req.body.product || !req.body.qty) {
         console.log("Here2");
         return res.status(500).json({message: "Missing 'product' or 'qty' node in req.body to add to cart"});
