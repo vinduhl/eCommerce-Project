@@ -1,4 +1,4 @@
-app.controller("MainCtrl", function($scope, $rootScope, $state, productService, userService) {
+app.controller("MainCtrl", function($scope, $rootScope, $state, productService, userService, orderService) {
 
   $scope.products = [];
   $scope.users = [];
@@ -37,14 +37,6 @@ app.controller("MainCtrl", function($scope, $rootScope, $state, productService, 
   $scope.getProducts();
 
 
-  // $scope.getProductsByCategory = (category) => {
-  //   const productSearch = {
-  //     productType: category
-  //   }
-  //   $scope.getProducts(productSearch);
-  // }
-
-
   $scope.clearSearchFields = (productSearch) => {
     for(let field in productSearch) {
       if(productSearch.hasOwnProperty(field)) {
@@ -55,7 +47,6 @@ app.controller("MainCtrl", function($scope, $rootScope, $state, productService, 
 
   $scope.createProduct = (newProduct) => {
 
-    //$scope.newProduct = null;
     $scope.newProductCreated = false;
 
     productService.addProduct(newProduct)
@@ -161,25 +152,35 @@ app.controller("MainCtrl", function($scope, $rootScope, $state, productService, 
       title: title,
       productImageDisplayUrl: imageUrl
     }
-  }
+  };
 
-  // $scope.getProductCountByCategory = () => {
-  //   productService.getProductCountByCategory()
-  //     .then( (result) => {
-  //       if(result.error) {
-  //         $scope.errorMessage = result.error;
-  //       } else {
-  //         $scope.productCountByCategory = result.data;
-  //       }
-  //     });
-  // };
-  // $scope.getProductCountByCategory();
+  $scope.completePurchase = (user) => {
+    // First, retrieve the cart from the database
+    let cart = null;
 
-  // $scope.runThis = () => {
-  //   $rootScope.$emit("loadProductCategories", {});
-  //   console.log("Testing here here here");
-  // }
-  // $scope.runThis();
+    userService.getCart(user)
+    .then( (result) => {
+      if(result.error) {
+        $scope.errorMessage = result.error;
+      } else {
+        cart = result.data;
+      }
+
+      if(cart) {
+        orderService.createOrder(user, cart)
+        .then( (result) => {
+          if(result.error) {
+            $scope.errorMessage = result.error;
+          } else {
+            //TODO: Complete this one
+            console.log("after purchase", result.data);
+          }
+        })
+      }
+    })
+  };
+
+
 
 
   function getTotalCartQuantityAndAmount(cart) {
@@ -194,5 +195,6 @@ app.controller("MainCtrl", function($scope, $rootScope, $state, productService, 
     $scope.totalCartItemQuantity = totalCartQty;
     $scope.totalCartAmount = totalCartAmount;
   }
+
 
 });
