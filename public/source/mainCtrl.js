@@ -156,6 +156,13 @@ app.controller("MainCtrl", function($scope, $rootScope, $state, productService, 
   };
   $scope.getProductCategories();
 
+  $scope.setProductDisplayImage = (imageUrl, title) => {
+    $scope.productImagePreview = {
+      title: title,
+      productImageDisplayUrl: imageUrl
+    }
+  }
+
   // $scope.getProductCountByCategory = () => {
   //   productService.getProductCountByCategory()
   //     .then( (result) => {

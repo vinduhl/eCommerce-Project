@@ -30,3 +30,8 @@
   max-height: 400px;
   overflow-y: scroll;
 }
+
+.product-image-preview {
+  height: auto;
+  width: 300px;
+}

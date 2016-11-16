@@ -35,6 +35,9 @@
                     <tr>
                       <td>Price:</td><td><input type="text" class="form-control" ng-model="newProduct.price"></td>
                     </tr>
+                    <tr>
+                      <td>Image URL:</td><td><input type="text" class="form-control" ng-model="newProduct.imageUrl"></td>
+                    </tr>
                   </table>
                 </div>
                 <div>
@@ -44,11 +47,15 @@
             </div>
           </div>
           <div class="row">
-            <div class="error-message col-md-12">{{ errorMessage }}</div>
+            <div class="col-md-12">
+              <div class="error-message col-md-12">{{ errorMessage }}</div>
+            </div>
           </div>
           <div class="row">
-            <div id="newProductDisplay col-md-12" ng-show="newProductCreated">
-              Successfully created {{ newProductName }}. <button ng-click="hideNewProductDisplay()">Hide</button>
+            <div class="col-md-12">
+              <div id="newProductDisplay col-md-12" ng-show="newProductCreated">
+                Successfully created {{ newProductName }}. <button ng-click="hideNewProductDisplay()">Hide</button>
+              </div>
             </div>
         </div>
         </div>
@@ -115,7 +122,6 @@
                   </tr>
                   <tr>
                     <td>Type:</td><td>
-                      <!-- <input type="text" ng-model="productToEdit.type"> -->
                       <select name="productType" ng-model="productToEdit.type" class="form-control"
                         ng-options="type for type in productCategories"></select>
                     </td>
@@ -125,6 +131,19 @@
                   </tr>
                   <tr>
                     <td>Price:</td><td><input type="text" ng-model="productToEdit.price" class="form-control"></td>
+                  </tr>
+                  <tr>
+                    <td>Image URL:</td><td><input type="text" ng-model="productToEdit.imageUrl" class="form-control"></td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>
+                      <a ng-show="productToEdit.imageUrl.trim().length > 0"
+                        ng-click="setProductDisplayImage(productToEdit.imageUrl, productToEdit.name)"
+                        data-toggle="modal" data-target="#productImageModal">
+                        Show Image Preview
+                      </a>
+                    </td>
                   </tr>
                   <tr>
                     <td>
@@ -143,5 +162,25 @@
       </div>
     </div>
   </div>
+
+  <!-- *** PRODUCT IMAGE PREVIEW *** -->
+  <div class="modal fade" id="productImageModal" tabindex="-1" role="dialog" aria-labelledby="productImageModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="productImageModalLabel">{{ productImagePreview.title }}</h4>
+        </div>
+        <div class="modal-body">
+          <img ng-src="{{ productImagePreview.productImageDisplayUrl }}" class="product-image-preview">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- *** End PRODUCT IMAGE PREVIEW *** -->
+
 
 </div>

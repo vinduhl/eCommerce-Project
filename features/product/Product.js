@@ -7,7 +7,8 @@ const Product = new mongoose.Schema( {
   description: {type: String, required: true, trim: true, minlength: 1, maxlength: 30},
   type: {type: String, lowercase: true, enum: enumProductTypes},
   price: {type: Number, default: 0.00},
-  onhand: {type: Number, default: 0}
+  onhand: {type: Number, default: 0},
+  imageUrl: {type: String, trim: true, default: "", maxlength: 200},
 });
 
 
