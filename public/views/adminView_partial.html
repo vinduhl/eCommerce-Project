@@ -82,7 +82,7 @@
           <strong class="panel-title">Product Maintenance</strong>
         </div>
         <div class="panel-body">
-          <div ng-hide="editMode" class="table-responsive">
+          <div class="table-responsive">
             <table class="table">
               <tr>
                 <th>
@@ -97,71 +97,98 @@
                   {{ product.name }}
                 </td>
                 <td>
-                  <a class="link" ng-click="editProduct(product)"><span class="glyphicon glyphicon-pencil"></span>
+                  <a class="link" ng-click="editProduct(product)"
+                    data-toggle="modal" data-target="#productEditModal">
+                    <span class="glyphicon glyphicon-pencil"></span>
                     <span class="icon-label">Edit</span></a><br/>
+
                   <a class="link" ng-click="deleteProduct(product)"><span class="glyphicon glyphicon-trash"></span>
                     <span class="icon-label">Delete</span></a>
                 </td>
               </tr>
             </table>
           </div>
-          <div ng-show="editMode">
-            <div class="table-responsive">
-              <form id="editProductForm" ng-submit="updateProduct(productToEdit)">
-                <table class="table">
-                  <tr>
-                    <th colspan="2">
-                      Edit Product
-                    </th>
-                  </tr>
-                  <tr>
-                    <td>Name:</td><td><input type="text" ng-model="productToEdit.name" class="form-control"></td>
-                  </tr>
-                  <tr>
-                    <td>Description:</td><td><input type="text" ng-model="productToEdit.description" class="form-control"></td>
-                  </tr>
-                  <tr>
-                    <td>Type:</td><td>
-                      <select name="productType" ng-model="productToEdit.type" class="form-control"
-                        ng-options="type for type in productCategories"></select>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Onhand:</td><td><input type="text" ng-model="productToEdit.onhand" class="form-control"></td>
-                  </tr>
-                  <tr>
-                    <td>Price:</td><td><input type="text" ng-model="productToEdit.price" class="form-control"></td>
-                  </tr>
-                  <tr>
-                    <td>Image URL:</td><td><input type="text" ng-model="productToEdit.imageUrl" class="form-control"></td>
-                  </tr>
-                  <tr>
-                    <td>&nbsp;</td>
-                    <td>
-                      <a ng-show="productToEdit.imageUrl.trim().length > 0"
-                        ng-click="setProductDisplayImage(productToEdit.imageUrl, productToEdit.name)"
-                        data-toggle="modal" data-target="#productImageModal">
-                        Show Image Preview
-                      </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <input type="submit" id="submitChange" class="btn btn-default" value="Save Changes"/>
-                    </td>
-                    <td>
-                      <a ng-click="cancelEdit()" style="cursor: pointer">Cancel</a>
-                    </td>
-                  </tr>
-                </table>
-              </form>
-            </div>
-          </div>
+
         </div>
 
       </div>
     </div>
   </div>
+
+
+  <div class="modal fade" id="productEditModal" tabindex="-1" role="dialog" aria-labelledby="productEditModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="productEditModalLabel">Edit Product</h4>
+        </div>
+        <form id="editProductForm" ng-submit="updateProduct(productToEdit)">
+        <div class="modal-body">
+
+          <div class="table-responsive">
+            <!-- <form id="editProductForm" ng-submit="updateProduct(productToEdit)"> -->
+              <table class="table">
+                <tr>
+                  <td>Name:</td><td><input type="text" ng-model="productToEdit.name" class="form-control"></td>
+                </tr>
+                <tr>
+                  <td>Description:</td><td><input type="text" ng-model="productToEdit.description" class="form-control"></td>
+                </tr>
+                <tr>
+                  <td>Type:</td><td>
+                    <select name="productType" ng-model="productToEdit.type" class="form-control"
+                      ng-options="type for type in productCategories"></select>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Onhand:</td><td><input type="text" ng-model="productToEdit.onhand" class="form-control"></td>
+                </tr>
+                <tr>
+                  <td>Price:</td><td><input type="text" ng-model="productToEdit.price" class="form-control"></td>
+                </tr>
+                <tr>
+                  <td>Image URL:</td><td><input type="text" ng-model="productToEdit.imageUrl" class="form-control"></td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                  <td>
+                    <span class="error-message">{{ productUpdateErrorMessage }}</span>
+                    <span>{{ productUpdateSuccessMessage }}</span>
+                  </td>
+                </tr>
+                <!-- <tr>
+                  <td>&nbsp;</td>
+                  <td>
+                    <a ng-show="productToEdit.imageUrl.trim().length > 0"
+                      ng-click="setProductDisplayImage(productToEdit.imageUrl, productToEdit.name)"
+                      data-toggle="modal" data-target="#productImageModal">
+                      Show Image Preview
+                    </a>
+                  </td>
+                </tr> -->
+                <!-- <tr>
+                  <td>
+                    <input type="submit" id="submitChange" class="btn btn-default" value="Save Changes"/>
+                  </td>
+                  <td>
+                    <a ng-click="cancelEdit()" style="cursor: pointer">Cancel</a>
+                  </td>
+                </tr> -->
+              </table>
+            <!-- </form> -->
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="submit" id="submitChange" class="btn btn-default">Save Changes</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 
   <!-- *** PRODUCT IMAGE PREVIEW *** -->
   <div class="modal fade" id="productImageModal" tabindex="-1" role="dialog" aria-labelledby="productImageModalLabel">

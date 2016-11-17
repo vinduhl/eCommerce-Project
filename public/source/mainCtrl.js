@@ -73,14 +73,25 @@ app.controller("MainCtrl", function($scope, $rootScope, $state, productService, 
 
   $scope.editProduct = (product) => {
     $scope.productToEdit = product;
-    $scope.editMode = true;
+    //$scope.editMode = true;
   };
 
   $scope.updateProduct = (product) => {
-    productService.updateProduct(product);
-    $scope.getProducts();
-    $scope.editMode = false;
-    $scope.getProductCountByCategory();
+    $scope.productUpdateErrorMessage = "";
+    $scope.productUpdateSuccessMessage = "";
+    productService.updateProduct(product)
+      .then( (result) => {
+        if(result.error) {
+          $scope.productUpdateErrorMessage = result.error;
+        } else {
+          $scope.productUpdateSuccessMessage = "Changes saved"
+          $scope.getProducts();
+          $scope.getProductCountByCategory();
+        }
+      });
+    // $scope.getProducts();
+    // $scope.editMode = false;
+    // $scope.getProductCountByCategory();
   };
 
   $scope.deleteProduct = (product) => {
