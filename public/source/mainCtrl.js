@@ -37,10 +37,10 @@ app.controller("MainCtrl", function($scope, $rootScope, $state, productService, 
   $scope.getProducts();
 
 
-  $scope.clearSearchFields = (productSearch) => {
-    for(let field in productSearch) {
-      if(productSearch.hasOwnProperty(field)) {
-        productSearch[field] = "";
+  $scope.clearFormFields = (form) => {
+    for(let field in form) {
+      if(form.hasOwnProperty(field)) {
+        form[field] = "";
       }
     }
   }
