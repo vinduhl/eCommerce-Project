@@ -7,6 +7,7 @@ app.controller("MainCtrl", function($scope, $rootScope, $state, productService, 
   $scope.totalCartItemQuantity = 0;
   $scope.totalCartAmount = 0;
   $scope.cart = [];
+  $scope.directiveAccessor = {};
 
   userService.getUsers().then( (result) => {
     if(result.error) {
@@ -91,7 +92,10 @@ app.controller("MainCtrl", function($scope, $rootScope, $state, productService, 
         } else {
           $scope.productUpdateSuccessMessage = "Changes saved"
           $scope.getProducts();
-          $scope.getProductCountByCategory();
+
+          if($scope.directiveAccessor) {
+            $scope.directiveAccessor.getProductCountByCategory();
+          }
         }
       });
     // $scope.getProducts();
@@ -214,8 +218,6 @@ app.controller("MainCtrl", function($scope, $rootScope, $state, productService, 
       }
     })
   };
-
-
 
 
   function getTotalCartQuantityAndAmount(cart) {

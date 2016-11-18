@@ -2,7 +2,8 @@ app.directive("productCategories", function() {
   return {
     restrict: "E",
     scope: {
-      getProducts: "="
+      getProducts: "=",
+      directiveAccessor: "="
     },
     templateUrl: "./directives/productCategoriesTemplate.html",
     controller: function($scope, productService) {
@@ -18,8 +19,15 @@ app.directive("productCategories", function() {
           });
       };
       $scope.getProductCountByCategory();
+
     },
     link: function(scope, elem, attrs) {
+
+      // This is to allow the external controller to call this directive's function
+      // to refresh the product count by category
+      if(scope.directiveAccessor) {
+        scope.directiveAccessor.getProductCountByCategory = scope.getProductCountByCategory;
+      }
 
       scope.getProductsByCategory = (categoryName) => {
         if(scope.getProducts) {
@@ -29,7 +37,8 @@ app.directive("productCategories", function() {
           };
           scope.getProducts(productSearch);
         }
-      }
+      };
+
     }
   };
 });
