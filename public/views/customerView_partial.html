@@ -83,13 +83,17 @@
                       <td>Product ID:</td><td><input type="text" class="form-control" ng-model="prod.productId"/></td>
                     </tr>
                     <tr>
-                      <td>Product Type:</td><td><input type="text" class="form-control" ng-model="prod.productType"/></td>
+                      <td>Product Type:</td><td>
+                        <select name="productType" ng-model="prod.productType" class="form-control" style="width:100%"
+                          ng-options="type for type in productCategories"></select>
+                        <!-- <input type="text" class="form-control" ng-model="prod.productType"/> -->
+                      </td>
                     </tr>
                   </table>
                 </div>
                 <div>
                   <button class="btn btn-default" ng-click="getProducts(prod)">Find Product</button>
-                  <button class="btn btn-default" ng-click="clearSearchFields(prod)">Clear Search</button>
+                  <button class="btn btn-default" ng-click="clearFormFields(prod)">Clear Search</button>
                 </div>
                 <div class="error-message">{{ errorMessage }}</div>
               </div>
