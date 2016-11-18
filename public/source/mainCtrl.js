@@ -72,8 +72,13 @@ app.controller("MainCtrl", function($scope, $rootScope, $state, productService, 
   };
 
   $scope.editProduct = (product) => {
-    $scope.productToEdit = product;
-    //$scope.editMode = true;
+    let clone = product.constructor();
+    for(let prop in product) {
+      if(product.hasOwnProperty(prop)) {
+        clone[prop] = product[prop];
+      }
+    }
+    $scope.productToEdit = clone;
   };
 
   $scope.updateProduct = (product) => {

@@ -127,62 +127,43 @@
         <div class="modal-body">
 
           <div class="table-responsive">
-            <!-- <form id="editProductForm" ng-submit="updateProduct(productToEdit)"> -->
-              <table class="table">
-                <tr>
-                  <td>Name:</td><td><input type="text" ng-model="productToEdit.name" class="form-control"></td>
-                </tr>
-                <tr>
-                  <td>Description:</td><td><input type="text" ng-model="productToEdit.description" class="form-control"></td>
-                </tr>
-                <tr>
-                  <td>Type:</td><td>
-                    <select name="productType" ng-model="productToEdit.type" class="form-control"
-                      ng-options="type for type in productCategories"></select>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Onhand:</td><td><input type="text" ng-model="productToEdit.onhand" class="form-control"></td>
-                </tr>
-                <tr>
-                  <td>Price:</td><td><input type="text" ng-model="productToEdit.price" class="form-control"></td>
-                </tr>
-                <tr>
-                  <td>Image URL:</td><td><input type="text" ng-model="productToEdit.imageUrl" class="form-control"></td>
-                </tr>
-                <tr>
-                  <td>&nbsp;</td>
-                  <td>
-                    <span class="error-message">{{ productUpdateErrorMessage }}</span>
-                    <span>{{ productUpdateSuccessMessage }}</span>
-                  </td>
-                </tr>
-                <!-- <tr>
-                  <td>&nbsp;</td>
-                  <td>
-                    <a ng-show="productToEdit.imageUrl.trim().length > 0"
-                      ng-click="setProductDisplayImage(productToEdit.imageUrl, productToEdit.name)"
-                      data-toggle="modal" data-target="#productImageModal">
-                      Show Image Preview
-                    </a>
-                  </td>
-                </tr> -->
-                <!-- <tr>
-                  <td>
-                    <input type="submit" id="submitChange" class="btn btn-default" value="Save Changes"/>
-                  </td>
-                  <td>
-                    <a ng-click="cancelEdit()" style="cursor: pointer">Cancel</a>
-                  </td>
-                </tr> -->
-              </table>
-            <!-- </form> -->
+            
+            <table class="table">
+              <tr>
+                <td>Name:</td><td><input type="text" ng-model="productToEdit.name" class="form-control"></td>
+              </tr>
+              <tr>
+                <td>Description:</td><td><input type="text" ng-model="productToEdit.description" class="form-control"></td>
+              </tr>
+              <tr>
+                <td>Type:</td><td>
+                  <select name="productType" ng-model="productToEdit.type" class="form-control"
+                    ng-options="type for type in productCategories"></select>
+                </td>
+              </tr>
+              <tr>
+                <td>Onhand:</td><td><input type="text" ng-model="productToEdit.onhand" class="form-control"></td>
+              </tr>
+              <tr>
+                <td>Price:</td><td><input type="text" ng-model="productToEdit.price" class="form-control"></td>
+              </tr>
+              <tr>
+                <td>Image URL:</td><td><input type="text" ng-model="productToEdit.imageUrl" class="form-control"></td>
+              </tr>
+              <tr>
+                <td>&nbsp;</td>
+                <td>
+                  <span class="error-message">{{ productUpdateErrorMessage }}</span>
+                  <span>{{ productUpdateSuccessMessage }}</span>
+                </td>
+              </tr>
+            </table>
           </div>
 
         </div>
         <div class="modal-footer">
           <button type="submit" id="submitChange" class="btn btn-default">Save Changes</button>
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-default" ng-click="clearFormFields(productToEdit)" data-dismiss="modal">Close</button>
         </div>
       </form>
     </div>
