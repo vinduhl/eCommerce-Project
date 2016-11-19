@@ -5,7 +5,7 @@ app.directive("productCategories", function() {
       getProducts: "=",
       directiveAccessor: "="
     },
-    templateUrl: "./directives/productCategoriesTemplate.html",
+    templateUrl: "./directives/categoriesDirective/productCategoriesTemplate.html",
     controller: function($scope, productService) {
 
       $scope.getProductCountByCategory = () => {
