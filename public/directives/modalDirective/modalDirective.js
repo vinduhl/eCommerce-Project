@@ -6,28 +6,47 @@ app.directive("modalDialog", function() {
       modalIdentifier: "@",
       modalTitle: "@",
       closeButtonAction: "=",
-      submitButtonLabel: "@",
+      closeButtonLabel: "@",
       formSubmit: "=",
-      formSubmitParam: "="
+      formSubmitParam: "=",
+      submitButtonLabel: "@",
+      actionButtonLabel: "@",
+      actionButtonFunction: "=",
+      actionButtonParam: "="
     },
     templateUrl: "./directives/modalDirective/modalTemplate.html",
     link: function(scope, elem, attrs) {
 
       scope.showSubmitButton = false;
+      scope.showActionButton = false;
 
-      if(scope.submitButtonLabel && scope.submitButtonLabel.trim() !== "") {
-        scope.showSubmitButton = true;
+      if(scope.submitButtonLabel && scope.submitButtonLabel.trim() !== "" &&
+        scope.formSubmit && scope.formSubmit instanceof Function) {
+
+          scope.showSubmitButton = true;
+          scope.submitCallback = () => {
+            scope.formSubmit(scope.formSubmitParam);
+          };
       }
 
-      if(scope.formSubmit && scope.formSubmit instanceof Function) {
-        console.log("Hi there");
-        scope.submitCallback = () => {
-          console.log("Submitting...");
-          scope.formSubmit(scope.formSubmitParam);
-        };
-        console.log("scope.submitCallback", scope.submitCallback);
+      if(scope.actionButtonLabel && scope.actionButtonLabel.trim() !== "" &&
+        scope.actionButtonFunction &&
+        scope.actionButtonFunction instanceof Function) {
+
+          scope.showActionButton = true;
+          scope.actionButtonCallback = () => {
+            if(scope.actionButtonParam) {
+              scope.actionButtonFunction(scope.actionButtonParam);
+            } else {
+              scope.actionButtonFunction();
+            }
+
+          }
       }
 
+      if(!scope.closeButtonLabel || scope.closeButtonLabel.trim() === "") {
+        scope.closeButtonLabel = "Close";
+      }
     }
   };
 });

@@ -11,7 +11,8 @@
         </div>
         <div class="modal-footer">
           <button ng-show="showSubmitButton" type="submit" class="btn btn-default">{{ submitButtonLabel }}</button>
-          <button type="button" class="btn btn-default" ng-click="closeButtonAction()" data-dismiss="modal">Close</button>
+          <button ng-show="showActionButton" type="button" ng-click="actionButtonCallback()" class="btn btn-default">{{ actionButtonLabel }}</button>
+          <button type="button" class="btn btn-default" ng-click="closeButtonAction()" data-dismiss="modal">{{ closeButtonLabel }}</button>
         </div>
       </form>
     </div>
