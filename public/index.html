@@ -10,35 +10,46 @@
 </head>
 <body ng-controller="MainCtrl">
 
-<div class="container">
-  <div class="row">
-    <div class="col-md-4">
-      selected item is: {{ userSelection.firstname }}
-      <select ng-model="userSelection" ng-change="getCart(userSelection)" ng-show="isCustomerView()" ng-options="user.firstname + ' ' + user.lastname for user in users">
-      </select>
-    </div>
-    <div class="col-md-8">
-      <a ui-sref="home">Customer</a> | <a ui-sref="admin">Admin</a>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-12">
-      <ui-view></ui-view>
-    </div>
-  </div>
-</div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.js"></script>
-<script src="./source/app.js"></script>
-<script src="./source/utils.js"></script>
-<script src="./source/mainCtrl.js"></script>
-<script src="./source/productService.js"></script>
-<script src="./source/userService.js"></script>
-<script src="./source/orderService.js"></script>
-<script src="./directives/categoriesDirective/productCategoriesDirective.js"></script>
-<script src="./directives/modalDirective/modalDirective.js"></script>
-<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">eShop</a>
+      </div>
+      <div>
+        <ul id="navMenuItems" class="nav navbar-nav navbar-left">
+          <li id="navShopLink" ng-class="isCustomerView() ? 'active' : ''"><a ui-sref="home">Shop</a></li>
+          <li id="navAdminLink" ng-class="isCustomerView() ? '' : 'active'"><a ui-sref="admin">Admin</a></li>
+        </ul>
+        <p class="navbar-text navbar-right cart-spacing">
+          <span ng-show="isCustomerView()">
+            <span class="glyphicon glyphicon-shopping-cart"></span>
+            cart:
+            <span class="badge">{{ totalCartItemQuantity }}</span>
+          </span>
+        </p>
+      </div>
+  </nav>
+
+  <div class="container container-padded">
+    <div class="row">
+      <div class="col-md-12">
+        <ui-view></ui-view>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.js"></script>
+  <script src="./source/app.js"></script>
+  <script src="./source/utils.js"></script>
+  <script src="./source/mainCtrl.js"></script>
+  <script src="./source/productService.js"></script>
+  <script src="./source/userService.js"></script>
+  <script src="./source/orderService.js"></script>
+  <script src="./directives/categoriesDirective/productCategoriesDirective.js"></script>
+  <script src="./directives/modalDirective/modalDirective.js"></script>
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </body>
 </html>

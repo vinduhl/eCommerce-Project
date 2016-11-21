@@ -36,3 +36,11 @@
   width: 300px;
   margin-top: 10px;
 }
+
+.container-padded {
+  margin-top: 50px;
+}
+
+.cart-spacing {
+  width: 100px;
+}

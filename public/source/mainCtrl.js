@@ -14,8 +14,10 @@ app.controller("MainCtrl", function($scope, $rootScope, $state, productService, 
       $scope.errorMessage = result.error;
     } else {
       $scope.users = result.data;
-      $scope.userSelection = $scope.users[0];
-      $scope.getCart($scope.userSelection);
+      if($scope.users && $scope.users.length > 0) {
+        $scope.userSelection = $scope.users[0];
+        $scope.getCart($scope.userSelection);
+      }
     }
   });
 
@@ -100,9 +102,6 @@ app.controller("MainCtrl", function($scope, $rootScope, $state, productService, 
           }
         }
       });
-    // $scope.getProducts();
-    // $scope.editMode = false;
-    // $scope.getProductCountByCategory();
   };
 
   $scope.deleteProduct = (product) => {
