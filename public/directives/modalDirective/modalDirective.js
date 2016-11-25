@@ -5,8 +5,11 @@ app.directive("modalDialog", function() {
     scope: {
       modalIdentifier: "@",
       modalTitle: "@",
-      closeButtonAction: "=",
+      closeButtonFunction: "=",
+      closeButtonParam: "=",
       closeButtonLabel: "@",
+      chainedModalButtonNextModal: "@",
+      chainedModalButtonLabel: "@",
       formSubmit: "=",
       formSubmitParam: "=",
       submitButtonLabel: "@",
@@ -19,6 +22,7 @@ app.directive("modalDialog", function() {
 
       scope.showSubmitButton = false;
       scope.showActionButton = false;
+      scope.showChainedModalButton = false;
 
       if(scope.submitButtonLabel && scope.submitButtonLabel.trim() !== "" &&
         scope.formSubmit && scope.formSubmit instanceof Function) {
@@ -27,6 +31,10 @@ app.directive("modalDialog", function() {
           scope.submitCallback = () => {
             scope.formSubmit(scope.formSubmitParam);
           };
+      }
+
+      if(scope.chainedModalButtonNextModal) {
+        scope.showChainedModalButton = true;
       }
 
       if(scope.actionButtonLabel && scope.actionButtonLabel.trim() !== "" &&
@@ -42,6 +50,17 @@ app.directive("modalDialog", function() {
             }
 
           }
+      }
+
+      if(scope.closeButtonFunction && scope.closeButtonFunction instanceof Function) {
+
+        scope.closeButtonCallback = () => {
+          if(scope.closeButtonParam) {
+            scope.closeButtonFunction(scope.closeButtonParam);
+          } else {
+            scope.closeButtonFunction();
+          }
+        }
       }
 
       if(!scope.closeButtonLabel || scope.closeButtonLabel.trim() === "") {
