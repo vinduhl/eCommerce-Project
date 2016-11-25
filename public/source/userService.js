@@ -14,6 +14,24 @@ app.service("userService", function($http) {
       });
   };
 
+  this.createTempUser = () => {
+    const tempUserId = `u${new Date().getTime()}`;
+
+    let user = {
+      firstname: "temp",
+      lastname: tempUserId,
+      email_address: `${tempUserId}@mailinator.com`
+    };
+    return $http
+      .post(`${baseUrl}user`, user)
+      .then( (response) => {
+        return new APIResponse(null, response.data);
+      },
+      (errorResponse) => {
+        return new APIResponse(errorResponse.data);
+      });
+  };
+
   this.addToCart = (user, product, qty) => {
     let item = {
       product: product._id,

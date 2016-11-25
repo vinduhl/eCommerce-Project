@@ -1,4 +1,4 @@
-app.controller("MainCtrl", function($scope, $rootScope, $state, productService, userService, orderService) {
+app.controller("MainCtrl", function($scope, $rootScope, $state, $window, productService, userService, orderService) {
 
   $scope.products = [];
   $scope.users = [];
@@ -9,17 +9,6 @@ app.controller("MainCtrl", function($scope, $rootScope, $state, productService, 
   $scope.cart = [];
   $scope.directiveAccessor = {};
 
-  userService.getUsers().then( (result) => {
-    if(result.error) {
-      $scope.errorMessage = result.error;
-    } else {
-      $scope.users = result.data;
-      if($scope.users && $scope.users.length > 0) {
-        $scope.userSelection = $scope.users[0];
-        $scope.getCart($scope.userSelection);
-      }
-    }
-  });
 
   $scope.isCustomerView = () => {
     return $state.current.name === "home";
@@ -234,5 +223,29 @@ app.controller("MainCtrl", function($scope, $rootScope, $state, productService, 
     $scope.totalCartAmount = totalCartAmount;
   }
 
+
+
+
+
+  function init() {
+
+    if($scope.loggedInUser) {
+      $scope.getCart($scope.loggedInUser);
+    } else if($window.localStorage.getItem("tempUser")) {
+      $scope.loggedInUser = JSON.parse($window.localStorage.getItem("tempUser"));
+      $scope.getCart($scope.loggedInUser);
+    } else {
+      userService.createTempUser()
+        .then( result => {
+          if(result.error) {
+            $scope.errorMessage = result.error;
+          } else {
+            $scope.loggedInUser = result.data;
+            $window.localStorage.setItem("tempUser", JSON.stringify($scope.loggedInUser));
+          }
+        });
+    }
+  }
+  init();
 
 });
