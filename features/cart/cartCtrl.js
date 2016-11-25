@@ -6,20 +6,17 @@ module.exports = {
     if(req.params.user_id) {
 
       if(!req.body.product || !req.body.qty) {
-        console.log("Here2");
         return res.status(500).json({message: "Missing 'product' or 'qty' node in req.body to add to cart"});
       }
 
       const userId = req.params.user_id;
       User.findByIdAndUpdate(userId, {$push: {"cart": req.body} }, (err, user) => {
         if(err) {
-          console.log("Here3:", err);
           return res.status(500).json(err);
         }
         if(user) {
           User.findById(userId, (err, user) => {
             if(err) {
-              console.log("Here4:", err);
               return res.status(500).json(err);
             }
             if(user) {
