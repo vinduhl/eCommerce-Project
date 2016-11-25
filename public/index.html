@@ -23,12 +23,15 @@
         </ul>
         <p class="navbar-text navbar-right cart-spacing">
           <span ng-show="isCustomerView()">
-            <span class="glyphicon glyphicon-shopping-cart"></span>
-            cart:
-            <span class="badge">{{ totalCartItemQuantity }}</span>
+            <a data-toggle="modal" data-target="#cartModal">
+              <span class="glyphicon glyphicon-shopping-cart"></span>
+              cart
+              <span class="badge">{{ totalCartItemQuantity }}</span>
+            </a>
           </span>
         </p>
       </div>
+    </div>
   </nav>
 
   <div class="container container-padded">
