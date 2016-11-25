@@ -11,57 +11,6 @@
 
       <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 
-        <!-- *** CART *** -->
-        <div class="panel panel-default">
-          <div class="panel-heading" role="tab" id="headingCart">
-            <strong class="panel-title">
-              <a href="#collapseCart" data-toggle="collapse" data-parent="#accordion" aria-expanded="false" aria-controls="collapseCart">
-                Cart
-              </a>
-            </strong>
-            <span class="glyphicon glyphicon-shopping-cart"></span>
-            Items in your cart:
-            <span class="badge">{{ totalCartItemQuantity }}</span>
-          </div>
-          <div id="collapseCart" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingCart">
-            <div class="panel-body fixed-panel">
-              <div class="row">
-                <div class="col-md-12">
-                  <span>Total items in cart: {{ totalCartItemQuantity }}</span>
-                  <span class="cart-update-message">{{ cartUpdateMessage }}</span>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="table-responsive">
-                    <table class="table">
-                      <tr ng-repeat="item in cart">
-                        <td>
-                        <strong>{{ item.product.name }}</strong><br/>
-                        {{ item.product.description }}<br/>
-                        ${{ item.product.price }} x <input class="cart-qty-input" type="text" ng-model="item.qty"/>
-                        = ${{ item.totalPrice }}
-                        </td>
-                        <td>
-                          <a class="link" ng-click="updateCart(userSelection, item)"><span class="glyphicon glyphicon-refresh"></span>
-                            Update Quantity</a><br/>
-                          <a class="link" ng-click="item.qty = 0; updateCart(userSelection, item)"><span class="glyphicon glyphicon-minus-sign"></span>
-                            Remove Item</a>
-                        </td>
-                      </tr>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="panel-footer">
-              Total Cart Amount: ${{ totalCartAmount }}
-              <button class="btn btn-default" data-toggle="modal" data-target="#checkoutModal">Checkout</button>
-            </div>
-          </div>
-        </div>
-        <!-- *** End CART *** -->
-
         <!-- *** SEARCH *** -->
         <div class="panel panel-default">
           <div class="panel-heading" role="tab" id="headingSearch">
@@ -168,7 +117,6 @@
     action-button-param="userSelection"
     close-button-label="Cancel / Edit Cart">
 
-      <div class="modal-body">
         <div>You are about to purchase the following products:</div>
 
         <div class="row">
@@ -193,10 +141,54 @@
           </div>
         </div>
 
-      </div>
-        
   </modal-dialog>
   <!-- *** End CHECKOUT MODAL *** -->
+
+
+  <!-- *** CART MODAL *** -->
+  <modal-dialog modal-identifier="cart" modal-title="Shopping Cart"
+    chained-modal-button-label="Checkout"
+    chained-modal-button-next-modal="#checkoutModal">
+
+      <div class="panel-body fixed-panel">
+        <div class="row">
+          <div class="col-md-12">
+            <span>Total items in cart: {{ totalCartItemQuantity }}</span>
+            <span class="cart-update-message">{{ cartUpdateMessage }}</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="table-responsive">
+              <table class="table">
+                <tr ng-repeat="item in cart">
+                  <td>
+                  <strong>{{ item.product.name }}</strong><br/>
+                  {{ item.product.description }}<br/>
+                  ${{ item.product.price }} x <input class="cart-qty-input" type="text" ng-model="item.qty"/>
+                  = ${{ item.totalPrice }}
+                  </td>
+                  <td>
+                    <a class="link" ng-click="updateCart(userSelection, item)"><span class="glyphicon glyphicon-refresh"></span>
+                      Update Quantity</a><br/>
+                    <a class="link" ng-click="item.qty = 0; updateCart(userSelection, item)"><span class="glyphicon glyphicon-minus-sign"></span>
+                      Remove Item</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Total Cart Amount: ${{ totalCartAmount }}
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+  </modal-dialog>
+
+  <!-- *** End CART MODAL *** -->
 
 
 </div>
