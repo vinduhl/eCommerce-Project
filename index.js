@@ -2,14 +2,19 @@ const express = require("express");
 const { json } = require("body-parser");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const jwt = require("jsonwebtoken");
+const config = require("./config");
+
 const productRoutes = require("./features/product/productRoutes");
 const userRoutes = require("./features/user/userRoutes");
 const orderRoutes = require("./features/order/orderRoutes");
 const cartRoutes = require("./features/cart/cartRoutes");
+const userCredentialRoutes = require("./features/credential/userCredentialRoutes");
 
 const app = express();
 app.use(json());
 app.use(cors());
+app.set("superSecret", config.secret);
 
 app.use(express.static("./public"));
 
