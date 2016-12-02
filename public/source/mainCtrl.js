@@ -1,4 +1,4 @@
-app.controller("MainCtrl", function($scope, $rootScope, $state, $window, productService, userService, orderService) {
+app.controller("MainCtrl", function($scope, $rootScope, $state, $window, $location, productService, userService, orderService, authenticationService) {
 
   $scope.products = [];
   $scope.users = [];
@@ -9,6 +9,15 @@ app.controller("MainCtrl", function($scope, $rootScope, $state, $window, product
   $scope.cart = [];
   $scope.directiveAccessor = {};
 
+
+
+  $rootScope.$on("$stateChangeSuccess", function(angularEvent, newState) {
+    //angularEvent.preventDefault();
+    console.log(authenticationService.isAuthenticated());
+    if(newState.requireAuth && !authenticationService.isAuthenticated()) {
+      $location.path("/login");
+    }
+  });
 
   $scope.isCustomerView = () => {
     return $state.current.name === "home";

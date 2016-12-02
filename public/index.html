@@ -18,8 +18,14 @@
       </div>
       <div>
         <ul id="navMenuItems" class="nav navbar-nav navbar-left">
-          <li id="navShopLink" ng-class="isCustomerView() ? 'active' : ''"><a ui-sref="home">Shop</a></li>
-          <li id="navAdminLink" ng-class="isCustomerView() ? '' : 'active'"><a ui-sref="admin">Admin</a></li>
+          <li id="navShopLink" ng-class="isCustomerView() ? 'active' : ''">
+            <a ng-show="!isCustomerView()" ui-sref="home">Shop</a>
+            <a ng-hide="!isCustomerView()">Shop</a>
+          </li>
+          <li id="navAdminLink" ng-class="isCustomerView() ? '' : 'active'">
+            <a ng-show="isCustomerView()" ui-sref="admin">Admin</a>
+            <a ng-hide="isCustomerView()">Admin</a>
+          </li>
         </ul>
         <p class="navbar-text navbar-right cart-spacing">
           <span ng-show="isCustomerView()">
@@ -50,6 +56,7 @@
   <script src="./source/productService.js"></script>
   <script src="./source/userService.js"></script>
   <script src="./source/orderService.js"></script>
+  <script src="./source/authenticationService.js"></script>
   <script src="./directives/categoriesDirective/productCategoriesDirective.js"></script>
   <script src="./directives/modalDirective/modalDirective.js"></script>
   <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>

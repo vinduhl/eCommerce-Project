@@ -8,8 +8,13 @@ app.config( ($stateProvider, $urlRouterProvider) => {
   })
   .state("admin", {
     url: "/admin",
-    templateUrl: "../views/adminView_partial.html"
-  });
+    templateUrl: "../views/adminView_partial.html",
+    requireAuth: true
+  })
+  .state("login", {
+    url: "/login",
+    templateUrl: "../views/login_partial.html"
+  })
 
   $urlRouterProvider
       .otherwise('/');
